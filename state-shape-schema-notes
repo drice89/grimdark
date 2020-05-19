@@ -1,0 +1,139 @@
+what data needs to be persisted
+
+tables
+users
+messages
+likes - joins tables
+conversations
+channels
+
+
+names of columns
+
+validations and indices
+  2 people with the same name or email?
+  foreign keys index
+standard vs joins tables
+
+
+syle schema is written in a table format
+table names are back_ticked
+table header column names are bolded
+columns names are lowercased and snaked_cased and back_ticked
+
+Due tomorrow schema tables written in markdown (user editor!)
+uploded to your repos wiki page
+
+
+ActiveStorage - no image urls in db
+
+github - new repo -> click on wiki -> create page
+
+Home page -> Database Schema -> use markdown
+
+state
+
+{
+  entities : {
+    users: {
+      id: {
+        id: id,
+        displayName: displayName,
+        title: title
+      }
+    }
+    messages: {
+      id: {
+        id: id,
+        body: body,
+        authorId: authorId,
+        recipientId: recipientId,
+        attachments: []
+        reactions: []
+      }
+    }
+    conversations: {
+      id: {
+        id: id,
+        name : name,
+        description: description,
+        playlistUrl: playlistUrl.
+        members: []
+        type: type
+      }
+    }
+      attachments: {
+        id: {
+          id: id,
+          attachmentUrl: attachmentUrl,
+          messageId: messageId,
+          uploaderId: uploaderId
+        }
+      }
+      reactions:{
+        id: {
+          id: id,
+          body: body,
+          messageId: messageId
+          authorId: authorId
+        }
+      }
+    }
+  conversation_policies: {
+    "direct message": {
+      type: "direct message",
+      addUsers: false,
+      allowAdmins: false,
+      minUsers: 2,
+      maxUsers: 2
+    }
+    "group message": {
+      type: "groupMessage message",
+      addUsers: false,
+      allowAdmins: false,
+      minUsers: 3,
+      maxUsers: 15
+    }
+    "channel": {
+      type: "channel",
+      addUsers: true,
+      allowAdmins: true,
+      allowAdmins: true,
+      minUsers: 3,
+      maxUsers: "unlimited"
+    }
+  }
+  session: {
+    currentUser: currentUser
+  }
+  ui: {
+    unreadMessage: boolean,
+  }
+  errors: {
+    userErrors: [],
+    sessionErrors: [],
+    messageErrors:[]
+  }
+}
+
+enditites
+  users:
+  posts
+
+Session
+  currentUser
+
+Ui
+  ex modalOpen: true
+
+errors: {
+  userErrors: [],
+  sessionErrors: [],
+  postErrors:[]
+}
+
+any table on the backend should have a slice on the front end
+
+tripple backticks = code markdown
+
+make project advisor a colaborator
