@@ -43,7 +43,7 @@ const viewport = {
     this.startTile[1] = tile[1] - 1 - Math.ceil((this.screen[1]/2) /tileH);
     console.log(this.startTile)
     if(this.startTile[0] < 0) this.startTile[0] = 0;
-    if(this.startTile[1] < 0) this.startTile[1] = 1;
+    if(this.startTile[1] < 0) this.startTile[1] = 0;
 
     //x + 9
     this.endTile[0] = tile[0] + 1 + Math.ceil((this.screen[0]/2) /tileW);
@@ -64,7 +64,7 @@ function Character() {
   this.dimensions = [30, 30];
   this.position = [51,51]
   //movement speed
-  this.delayMove = 200;
+  this.delayMove = 000;
   this.facing = "down"
 }
 
@@ -304,7 +304,7 @@ let player = new Character();
     
     //draw from map
     for(let y = viewport.startTile[1]; y <= viewport.endTile[1]; y++) {
-      for(let x = viewport.startTile[0]; x < viewport.endTile[0]; x++) {
+      for(let x = viewport.startTile[0]; x <= viewport.endTile[0]; x++) {
         switch(gameMap[(y * mapW) + x]) {
           case 0:
             ctx.fillStyle = "#999";
