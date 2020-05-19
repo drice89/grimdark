@@ -35,13 +35,11 @@ const viewport = {
 
     //this is the x, y value of the tile at the center
     const tile = [Math.floor(px/tileW), Math.floor(py/tileH)]
-    console.log("center point", tile)
     //based on center tile defined by camera. horizontal value 
     //[first tile X] = [center tile X] - 1 - Round Up(([Canvas width] / 2) / [tile width]); x - 9
     this.startTile[0] = tile[0] - 1 - Math.ceil((this.screen[0]/2) /tileW);
     // first tile y = center tile y -  9
     this.startTile[1] = tile[1] - 1 - Math.ceil((this.screen[1]/2) /tileH);
-    console.log(this.startTile)
     if(this.startTile[0] < 0) this.startTile[0] = 0;
     if(this.startTile[1] < 0) this.startTile[1] = 0;
 
@@ -49,7 +47,7 @@ const viewport = {
     this.endTile[0] = tile[0] + 1 + Math.ceil((this.screen[0]/2) /tileW);
     // y + 9
     this.endTile[1] = tile[1] + 1 + Math.ceil((this.screen[0]/2) /tileH);
-    console.log(this.endTile)
+
     if(this.endTile[0] >= mapW) this.endTile[0] = mapW - 1;
     if(this.endTile[1] >= mapH) this.endTile[1] = mapH - 1;
   }
@@ -181,10 +179,81 @@ let player = new Character();
              1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
              ];
   
+
+
+
+function ramdomizer(num, i){
+  if(num > 1) {
+    const tile = Math.floor(Math.random() * 100)
+    
+    const item = 93;
+    const keycard = 99;
+    const object = 89;
+    const rearWallDecoration = 80
+    
+    //order matters
+    if(tile >= keycard) return 2
+    if(tile >= item) return 3
+    if(tile >= object ) return 4
+    if(tile >= rearWallDecoration && (((i - (i%mapW))/mapW)%16) === 1) return 5
+    return 1
+  } else {
+    return 0;
+  }
+}
+
+function multiRandomizer() {
+  const thing = Math.floor(Math.random() * 10)
+  if(thing > 7) return 11
+  if(thing > 4) return 12
+  return 13
+}
+
+function randomizeMap(arr) {
+  let multiItem = false
+  const lastMulti = null
+  return arr.map((tile, i) => {
+    if (multiItem) {
+      multiItem = false
+      return lastMulti
+    }
+    const res = ramdomizer(tile, i)
+    if( res !== 7) return res
+    multiItem = true
+    lastMulti = multiRandomizer() 
+    return lastMulti
+    })
+}
+const gameMapGenerator = randomizeMap(gameMap)
+
+const floorTypes = {
+  solid: 1,
+  open: 
+}
+
+
+
+
+
+
+
+
+
   //helpers
   function toIndex(x,y) {
     return ((y*mapW) + x);
   }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -330,5 +399,8 @@ let player = new Character();
   lastFrameTime = currentFrameTime;
   requestAnimationFrame(drawGame)
 }
+
+
+
 
 
