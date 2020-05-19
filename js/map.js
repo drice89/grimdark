@@ -15,6 +15,45 @@ let keysDown = {
   40: false, //down arrow
   }
 
+//viewport
+
+const viewport = {
+  //dimensions of canvas
+  screen: [0,0],
+  //top left tile
+  startTile: [0,0],
+  //bottom right tile
+  endTile: [0,0],
+  //x and y offeset from the beginning of the screen
+  offset: [0,0],
+  update: function(px, py) {
+    //px and py are the center of the visible area to the camera
+    //drawing area with/2 - camera horizontal offeset
+    this.offset[0] = Math.floor((this.screen[0]/2) - px);
+    //dawing area height/2 - camera vertical offser
+    this.offset[1] = Math.floor((this.screen[1]/2) - py);
+
+    //this is the x, y value of the tile at the center
+    const tile = [Math.floor(px/tileW), Math.floor(py/tileH)]
+    console.log("center point", tile)
+    //based on center tile defined by camera. horizontal value 
+    //[first tile X] = [center tile X] - 1 - Round Up(([Canvas width] / 2) / [tile width]); x - 9
+    this.startTile[0] = tile[0] - 1 - Math.ceil((this.screen[0]/2) /tileW);
+    // first tile y = center tile y -  9
+    this.startTile[1] = tile[1] - 1 - Math.ceil((this.screen[1]/2) /tileH);
+    console.log(this.startTile)
+    if(this.startTile[0] < 0) this.startTile[0] = 0;
+    if(this.startTile[1] < 0) this.startTile[1] = 1;
+
+    //x + 9
+    this.endTile[0] = tile[0] + 1 + Math.ceil((this.screen[0]/2) /tileW);
+    // y + 9
+    this.endTile[1] = tile[1] + 1 + Math.ceil((this.screen[0]/2) /tileH);
+    console.log(this.endTile)
+    if(this.endTile[0] >= mapW) this.endTile[0] = mapW - 1;
+    if(this.endTile[1] >= mapH) this.endTile[1] = mapH - 1;
+  }
+}
 
 function Character() {
   this.tileFrom = [1,1];
@@ -147,13 +186,6 @@ let player = new Character();
     return ((y*mapW) + x);
   }
 
-  function inBounds() {
-    const x = player.tileFrom[0]
-    const y = player.tileFrom[1]
-
-    return (x > 0 && x < (mapW-1)) && (y > 0 && y < mapH)
-  }
-
 
 
 
@@ -175,7 +207,7 @@ let player = new Character();
       }
     });
     //this is setting the viewport screen area 
-    veiwport.screen = [game.width, game.height]
+    viewport.screen = [game.width, game.height]
   };
 
   function drawGame() {
@@ -192,9 +224,13 @@ let player = new Character();
     } else {
       frameCount ++
     }
-    //Player movement
+    //Player movement//////////////////////////////////////////////////////
     if (!player.processMovement(currentFrameTime)) {
-            //////////////////////////////////
+      function inBounds() {
+        const x = player.tileFrom[0]
+        const y = player.tileFrom[1]
+        return (x > 0 && x < (mapW-1)) && (y > 0 && y < mapH)
+      }
       if (inBounds()) {
         //Left + up arrow
         if ((keysDown[37] && keysDown[38]) 
@@ -255,15 +291,21 @@ let player = new Character();
       }
       
     }
+   ////////////////////////////////////////////////////////////////
 
-    veiwport.update(player.position[0] + (player.dimensions[0]/2), player.position[1] + (player.dimensions[1]/2))
+
+    viewport.update(player.position[0] + (player.dimensions[0]/2), player.position[1] + (player.dimensions[1]/2))
     
     ctx.fillStyle = "#000000";
-    ctx.fillRect = (0,0, veiwport.screen[0], veiwport.scren[1])
+    ctx.fillRect(0, 0, viewport.screen[0], viewport.screen[1]);
+
+    
+    
+    
     //draw from map
-    for(let row = 0; row < mapH; row++) {
-      for(let col = 0; col < mapW; col++) {
-        switch(gameMap[(row * mapW) + col]) {
+    for(let y = viewport.startTile[1]; y <= viewport.endTile[1]; y++) {
+      for(let x = viewport.startTile[0]; x < viewport.endTile[0]; x++) {
+        switch(gameMap[(y * mapW) + x]) {
           case 0:
             ctx.fillStyle = "#999";
             break;
@@ -271,13 +313,16 @@ let player = new Character();
             ctx.fillStyle = "#eee";
         }
         //render tile
-        ctx.fillRect(col * tileW, row * tileH, tileW, tileH);
+       ctx.fillRect( (viewport.offset[0] + (x*tileW)), ( viewport.offset[1] + (y*tileH)), tileW, tileH);
+
       }
     }
 
+
+
   //render player
   ctx.fillStyle = "#0000ff";
-  ctx.fillRect(player.position[0], player.position[1], player.dimensions[0], player.dimensions[1]);
+  ctx.fillRect((viewport.offset[0] + player.position[0]), (viewport.offset[1] + player.position[1]), player.dimensions[0], player.dimensions[1]);
   
   ctx.fillStyle = "ff0000";
   ctx.fillText("FPS: " + framesLastSecond, 10, 20)
@@ -286,43 +331,4 @@ let player = new Character();
   requestAnimationFrame(drawGame)
 }
 
-//viewport
-
-const veiwport = {
-  //dimensions of canvas
-  screen: [0,0],
-  //top left tile
-  start: [0,0],
-  //bottom right tile
-  endTile: [0,0],
-  //x and y offeset from the beginning of the screen
-  offset: [0,0],
-  update: function(px, py) {
-    //px and py are the center of the visible area to the camera
-    //drawing area with/2 - camera horizontal offeset
-    this.offset[0] = Math.floor((this.screen[0]/2) - px);
-    //dawing area height/2 - camera vertical offser
-    this.offset[1] = Math.floor((this.screen[1]/2) - py);
-
-    //this is the x, y value of the tile at the center
-    const tile = [Math.floor(px/tileW), Math.floor(py/tileH)]
-    console.log("center point", tile)
-    //based on center tile defined by camera. horizontal value 
-    //[first tile X] = [center tile X] - 1 - Round Up(([Canvas width] / 2) / [tile width]); x - 9
-    this.startTile[0] = tile[0] - 1 - Math.ceil((this.screen[0]/2) /tileW);
-    // first tile y = center tile y -  9
-    this.startTile[1] = tile[1] - 1 - Math.ceil((this.screen[1]/2) /tileH);
-    console.log(this.startTile)
-    if(this.startTile[0] < 0) this.startTile[0] = 0;
-    if(this.startTile[1] < 0) this.startTile[1] = 1;
-
-    //x + 9
-    this.endTile[0] = tile[0] + 1 + Math.ceil((this.screen[0]/2) /tileW);
-    // y + 9
-    this.endTile[1] = tile[1] + 1 + Math.ceil((this.screen[0]/2) /tileH);
-    console.log(this.endTile)
-    if(this.endTile[0] >= mapW) this.endTile[0] = mapW - 1;
-    if(this.endTile[1] >= mapH) this.endTile[1] = mapH - 1;
-  }
-}
 
