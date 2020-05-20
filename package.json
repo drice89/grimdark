@@ -1,0 +1,25 @@
+{
+  "name": "grimdark",
+  "version": "1.0.0",
+  "description": "rouge-like sci-fi game",
+  "main": "index.js",
+  "dependencies": {
+    "webpack-cli": "^3.3.11",
+    "webpack": "^4.43.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack --watch --mode=development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drice89/grimdark.git"
+  },
+  "author": "Dillon Rice",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/drice89/grimdark/issues"
+  },
+  "homepage": "https://github.com/drice89/grimdark#readme"
+}
