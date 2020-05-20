@@ -83,45 +83,49 @@ Character.prototype.canMoveDownLeft = function() { return this.isValidMove((this
 Character.prototype.canMoveDownRight = function() { return this.isValidMove((this.tileFrom[0] + 1), (this.tileFrom[1] + 1)) }
 
 Character.prototype.move = function(direction, time) {
-  switch(direction) {
-    case "UPLEFT":
-      this.tileTo[0] -= 1
-      this.tileTo[1] -= 1
-      this.facing = this.LEFT
-      break;
-    case "UPRIGHT":
-      this.tileTo[0] += 1
-      this.tileTo[1] -= 1
-      this.facing = this.RIGHT
-      break;
-    case "DOWNLEFT":
-      this.tileTo[0] -= 1
-      this.tileTo[1] += 1
-      this.facing = this.LEFT
-      break;
-    case "DOWNRIGHT":
-      this.tileTo[0] += 1
-      this.tileTo[1] += 1
-      this.facing = this.RIGHT
-      break;
-    case "UP":
-      this.tileTo[1] -= 1 
-      this.facing = this.UP
-      break;
-    case "DOWN":
-      this.tileTo[1] += 1
-      this.facing = this.DOWN
-      break;
-    case "LEFT":
-      this.tileTo[0] -= 1
-      this.facing = this.LEFT
-      break;
-    case "RIGHT":
-      this.tileTo[0] += 1
-      this.facing = this.RIGHT
-      break;
-  }
+  this.tileTo[0] += direction.DIRS[0]
+  this.tileTo[1] += direction.DIRS[1]
   this.timeMoved = time
+  this.facing = direction.FACING
+  // switch(direction) {
+  //   case "UPLEFT":
+  //     this.tileTo[0] -= 1
+  //     this.tileTo[1] -= 1
+  //     this.facing = this.LEFT
+  //     break;
+  //   case "UPRIGHT":
+  //     this.tileTo[0] += 1
+  //     this.tileTo[1] -= 1
+  //     this.facing = this.RIGHT
+  //     break;
+  //   case "DOWNLEFT":
+  //     this.tileTo[0] -= 1
+  //     this.tileTo[1] += 1
+  //     this.facing = this.LEFT
+  //     break;
+  //   case "DOWNRIGHT":
+  //     this.tileTo[0] += 1
+  //     this.tileTo[1] += 1
+  //     this.facing = this.RIGHT
+  //     break;
+  //   case "UP":
+  //     this.tileTo[1] -= 1 
+  //     this.facing = this.UP
+  //     break;
+  //   case "DOWN":
+  //     this.tileTo[1] += 1
+  //     this.facing = this.DOWN
+  //     break;
+  //   case "LEFT":
+  //     this.tileTo[0] -= 1
+  //     this.facing = this.LEFT
+  //     break;
+  //   case "RIGHT":
+  //     this.tileTo[0] += 1
+  //     this.facing = this.RIGHT
+  //     break;
+  // }
+  
 }
 
 

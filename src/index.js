@@ -15,6 +15,10 @@ const assetUrls ={
 window.ctx = null
 window.tilesetLoaded = false 
 window.monsterSetLoaded = false; 
+window.currentSecond = 0, 
+window.frameCount = 0, 
+window.framesLastSecond = 0;
+window.lastFrameTime = 0;
 
 
 window.onload = function() {
