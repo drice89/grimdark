@@ -2,10 +2,11 @@
     
 
 let ctx = null;
-const tileW = 50, tileH = 50;
+const tileW = 48, tileH = 48;
 const mapW = 64, mapH = 64;
-let tileset = null, tilesetLoaded = false; 
+let tileset = null, monsterSet = null, tilesetLoaded = false, monsterSetLoaded = false; 
 const tilesetURL = "./assets/tiny_galaxy_world.png"
+const characterTilesetUrl = "./assets/tiny_galaxy_monsters.png"
 
 let currentSecond = 0, frameCount = 0, framesLastSecond = 0;
 let lastFrameTime = 0;
@@ -15,7 +16,7 @@ let keysDown = {
   39: false, //right arrow
   38: false, //up arrow
   40: false, //down arrow
-  }
+}
 
 //viewport
 
@@ -64,15 +65,22 @@ function Character() {
   //also affects movement speed 
   this.timeMoved = 0;
   //this is the dimension of the character sprite
-  this.dimensions = [30, 30];
+  this.dimensions = [48, 48];
   this.position = [51,51]
   //movement speed
-  this.delayMove = 000;
-  this.facing = "down"
+  this.delayMove = 100;
+  this.facing = "DOWN"
   this.LEFT = "LEFT"
   this.RIGHT = "RIGHT"
   this.UP = "UP"
   this.DOWN = "DOWN"
+  this.playerSprites = {
+    "UP": [{x:96, y:0, w:47, h:47}, {x:96, y:48, w:47, h:47}],
+    "DOWN": [{x:48, y:0, w:47, h:47}, {x:48, y:48, w:47, h:47}],
+    "LEFT": [{x:144, y:0, w:47, h:47}, {x:144, y:48, w:47, h:47}],
+    "RIGHT": [{x:0, y:0, w:47, h:47}, {x:0, y:48, w:47, h:47}],
+  }
+  this.movementAnimation = "false"
 }
 
 //this function is dependent upon globals - maybe do tileW = this.tileW.bind(this)
@@ -94,6 +102,7 @@ Character.prototype.processMovement = function(time) {
   } 
   if((time - this.timeMoved) >= this.delayMove) {
     this.placeAt(this.tileTo[0], this.tileTo[1])
+    this.movementAnimation = !this.movementAnimation
   } else {
     //below block gives pixel value starting position
     this.position[0] = (this.tileFrom[0] * tileW) + ((tileW - this.dimensions[0])/2);
@@ -140,30 +149,38 @@ Character.prototype.move = function(direction, time) {
     case "UPLEFT":
       this.tileTo[0] -= 1
       this.tileTo[1] -= 1
+      this.facing = this.LEFT
       break;
     case "UPRIGHT":
       this.tileTo[0] += 1
       this.tileTo[1] -= 1
+      this.facing = this.RIGHT
       break;
     case "DOWNLEFT":
       this.tileTo[0] -= 1
       this.tileTo[1] += 1
+      this.facing = this.LEFT
       break;
     case "DOWNRIGHT":
       this.tileTo[0] += 1
       this.tileTo[1] += 1
+      this.facing = this.RIGHT
       break;
     case "UP":
       this.tileTo[1] -= 1 
+      this.facing = this.UP
       break;
     case "DOWN":
       this.tileTo[1] += 1
+      this.facing = this.DOWN
       break;
     case "LEFT":
       this.tileTo[0] -= 1
+      this.facing = this.LEFT
       break;
     case "RIGHT":
       this.tileTo[0] += 1
+      this.facing = this.RIGHT
       break;
   }
   this.timeMoved = time
@@ -293,15 +310,37 @@ const floorTypes = {
   open: 0
 }
 
+const interiorWalls = {
+  1: {x:144, y:0, w:48, h:48},
+  2: {x:112, y:0, w:16, h:16},
+  3: {x:128, y:0, w:16, h:16},
+  4: {x:144, y:0, w:16, h:16},
+  5: {x:160, y:0, w:16, h:16},
+  6: {x:176, y:0, w:16, h:16},
+}
+
+const floorTiles = {
+  1: {x:0, y:16, w:48, h:48},
+  2: {x:112, y:16, w:16, h:16},
+  3: {x:128, y:16, w:16, h:16},
+  4: {x:144, y:16, w:16, h:16},
+  5: {x:160, y:16, w:16, h:16},
+  6: {x:176, y:16, w:16, h:16},
+}
+
+const keycards = {
+  
+}
+
 const tileTypes = {
-  0: { name: "wall", sprite:[{x:96, y:0, w:16, h:16}, {x: 0, y:0, w:16, h:16}], color: "white", floor: floorTypes.solid },
-  1: { name: "tile", sprite:[{x: 0, y:127, w:16, h:16}], color: "grey", floor: floorTypes.open },
-  2: { name: "keycard", sprite:[{x: 0, y:0, w:40, h:40}], color: "green", floor: floorTypes.open },
-  3: { name: "item", sprite:[{x: 0, y:0, w:40, h:40}], color: "yellow", floor: floorTypes.open },
-  41: { name: "table", sprite:[{x: 0, y:0, w:40, h:40}], color: "blue", floor: floorTypes.solid },
-  42: { name: "vat", sprite:[{x: 0, y:0, w:40, h:40}], color: "aqua", floor: floorTypes.solid },
-  43: { name: "crate", sprite:[{x: 0, y:0, w:40, h:40}], color: "orange", floor: floorTypes.open },
-  5: { name: "computer", sprite:[{x: 0, y:0, w:40, h:40}], color: "red", floor: floorTypes.solid },
+  0: { name: "wall", sprite:[{x:288, y:96, w:48, h:48}], color: "white", floor: floorTypes.solid },
+  1: { name: "tile", sprite:[{x:144, y:432, w:48, h:48}], color: "grey", floor: floorTypes.open },
+  2: { name: "keycard", sprite:[{x: 0, y:112, w:16, h:16}], color: "green", floor: floorTypes.open },
+  3: { name: "item", sprite:[{x: 0, y:0, w:16, h:16}], color: "yellow", floor: floorTypes.open },
+  41: { name: "table", sprite:[{x: 0, y:32, w:16, h:16}], color: "blue", floor: floorTypes.solid },
+  42: { name: "vat", sprite:[{x: 48, y:32, w:16, h:16}], color: "aqua", floor: floorTypes.solid },
+  43: { name: "crate", sprite:[{x: 16, y:32, w:16, h:16}], color: "orange", floor: floorTypes.open },
+  5: { name: "computer", sprite:[{x: 64, y:32, w:16, h:16}], color: "red", floor: floorTypes.solid },
 }
 
 
@@ -354,8 +393,14 @@ const tileTypes = {
     viewport.screen = [game.width, game.height]
 
     tileset = new Image();
+    monsterSet = new Image();
 
-    tileset.onError = function(e) {
+    tileset.onerror = function(e) {
+      ctx = null;
+      alert(e.message);
+    }
+
+    monsterSet.onerror = function(e) {
       ctx = null;
       alert(e.message);
     }
@@ -364,14 +409,25 @@ const tileTypes = {
       tilesetLoaded = true
     };
 
-    tileset.src = tilesetURL;
+    monsterSet.onload = function() {
+      monsterSetLoaded = true
+    }
 
+    tileset.src = tilesetURL;
+    monsterSet.src = characterTilesetUrl;
+    console.log(monsterSet)
   };
+
+
+
+
+
 
   function drawGame() {
     if(ctx === null) return;
-    if(!tilesetLoaded) {
+    if(!tilesetLoaded || !monsterSetLoaded) {
       requestAnimationFrame(drawGame)
+      console.log(monsterSetLoaded)
       return
     }
     
@@ -436,8 +492,15 @@ const tileTypes = {
 
     viewport.update(player.position[0] + (player.dimensions[0]/2), player.position[1] + (player.dimensions[1]/2))
     
-    ctx.fillStyle = "#000000";
-    ctx.fillRect(0, 0, viewport.screen[0], viewport.screen[1]);
+    //const randomSpaceTileGenerator = Math.floor(Math.random()* 4) + 1
+    const spaceTiles = {
+      1: {x:192, y:1008, w:192, h:48 },
+      2: {x:240, y:1008, w:48, h:48 },
+      3: {x:288, y:1008, w:48, h:48 },
+      4: {x:336, y:1008, w:48, h:48 },
+    }
+
+    ctx.drawImage(tileset, spaceTiles[1].x, spaceTiles[1].y, spaceTiles[1].w, spaceTiles[1].h,  0, 0, viewport.screen[0], viewport.screen[1]);
 
     
     
@@ -446,6 +509,11 @@ const tileTypes = {
     for(let y = viewport.startTile[1]; y <= viewport.endTile[1]; y++) {
       for(let x = viewport.startTile[0]; x <= viewport.endTile[0]; x++) {
         const tile = tileTypes[gameMap[toIndex(x,y)]];
+        // const random = Math.floor(Math.random() * 6) + 1;
+        // const tileSpriteX = (tile.name === "wall") || (tile.name === "tile") ? tile.sprite[0][1].x : tile.sprite[0].x;
+        // const tileSpriteY = (tile.name === "wall") || (tile.name === "tile") ? tile.sprite[0][1].y : tile.sprite[0].y;
+        // const tileSpriteW = (tile.name === "wall") || (tile.name === "tile") ? tile.sprite[0][1].y : tile.sprite[0].w;
+        // const tileSpriteH = (tile.name === "wall") || (tile.name === "tile") ? tile.sprite[0][1].w : tile.sprite[0].h;
         //causing some problems with the map - revisit later
         // if((y%16 === 0) && (x%16 !== 0) && (x%16 !== 15)) {
         //     //debugger
@@ -462,8 +530,10 @@ const tileTypes = {
 
 
   //render player
-  ctx.fillStyle = "#0000ff";
-  ctx.fillRect((viewport.offset[0] + player.position[0]), (viewport.offset[1] + player.position[1]), player.dimensions[0], player.dimensions[1]);
+  let spriteIndex = (player.movementAnimation) ? 0 : 1
+  ctx.drawImage(monsterSet, player.playerSprites[player.facing][spriteIndex].x, player.playerSprites[player.facing][spriteIndex].y, player.playerSprites[player.facing][spriteIndex].w, player.playerSprites[player.facing][spriteIndex].h,  (viewport.offset[0] + player.position[0]), (viewport.offset[1] + player.position[1]), player.dimensions[0], player.dimensions[1]);
+  // ctx.fillStyle = "#0000ff";
+  // ctx.fillRect((viewport.offset[0] + player.position[0]), (viewport.offset[1] + player.position[1]), player.dimensions[0], player.dimensions[1]);
   
   ctx.fillStyle = "ff0000";
   ctx.fillText("FPS: " + framesLastSecond, 10, 20)
