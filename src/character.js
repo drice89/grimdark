@@ -1,7 +1,7 @@
 
 ////Character
 class Character {
-  constructor(mapH, mapW) {
+  constructor() {
     this.tileFrom = [1,1];
     this.tileTo = [1,1];
     //also affects movement speed 
@@ -71,11 +71,7 @@ Character.prototype.processMovement = function(time) {
   return true
 }
 //this function is dependent upon globals - needs to go in the map
-Character.prototype.isValidMove = function(x,y) {
-  if(x < 0 || x > (mapW-1) || y < 0 || y > mapH-1) return false
-  if(tileTypes[gameMap[toIndex(x,y)]].floor !== floorTypes.open) return false
-  return true
-}
+
 
 Character.prototype.canMoveUp = function() { return this.isValidMove(this.tileFrom[0], (this.tileFrom[1] - 1)) }
 Character.prototype.canMoveDown = function() { return this.isValidMove(this.tileFrom[0], (this.tileFrom[1] + 1)) }

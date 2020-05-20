@@ -6,14 +6,14 @@ import { levelOne } from "./levels"
 class Game {
   constructor(viewportDimensions) {
     this.gameMap = new Map(levelOne)
+    this.player = new Character()
+    this.viewport = new Viewport(viewportDimensions) //game.width, game.height
     this.keysDown = {
       37: false, //left arrow
       39: false, //right arrow
       38: false, //up arrow
       40: false, //down arrow
     }
-    this.player = new Character()
-    this.viewport = new Viewport(viewportDimensions) //game.width, game.height
     this.floorTypes = {
       solid: 1,
       open: 0
@@ -27,6 +27,17 @@ class Game {
       42: { name: "vat", sprite:[{x: 48, y:32, w:16, h:16}], floor: this.floorTypes.solid },
       43: { name: "crate", sprite:[{x: 16, y:32, w:16, h:16}], floor: this.floorTypes.open },
       5: { name: "computer", sprite:[{x: 64, y:32, w:16, h:16}], floor: this.floorTypes.solid },
+    }
+
+    this.DIRECTIONS = {
+      "UP": [0, -1],
+      "DOWN": [0, 1],
+      "LEFT": [-1, 0],
+      "RIGHT": [1,0],
+      "UPLEFT": [-1,-1],
+      "UPRIGHT": [1, -1],
+      "DOWNLEFT": [-1, 1],
+      "DOWNRIGHT": [1, 1]
     }
 
     this.drawGame = () => {
@@ -151,6 +162,14 @@ class Game {
   renderViewportImage() {
      window.ctx.drawImage(window.spaceImage, 0, 0, 800, 800,  0, 0, this.viewport.screen[0], this.viewport.screen[1]);
   }
+
+  isValidMove(arr) {
+    const x, y = arr
+    if(x < 0 || x > (mapW-1) || y < 0 || y > mapH-1) return false
+    if(this.tileTypes[this.gameMap[this.toIndex(x,y)]].floor !== this.floorTypes.open) return false
+    return true
+  }
+
 }
   
 
