@@ -7,9 +7,12 @@ const mapW = 64, mapH = 64;
 let tileset = null, monsterSet = null, tilesetLoaded = false, monsterSetLoaded = false; 
 const tilesetURL = "./assets/tiny_galaxy_world.png"
 const characterTilesetUrl = "./assets/tiny_galaxy_monsters.png"
+const spaceImageUrl = "./assets/space.png"
 
 let currentSecond = 0, frameCount = 0, framesLastSecond = 0;
 let lastFrameTime = 0;
+
+
 
 let keysDown = { 
   37: false, //left arrow
@@ -310,27 +313,24 @@ const floorTypes = {
   open: 0
 }
 
-const interiorWalls = {
-  1: {x:144, y:0, w:48, h:48},
-  2: {x:112, y:0, w:16, h:16},
-  3: {x:128, y:0, w:16, h:16},
-  4: {x:144, y:0, w:16, h:16},
-  5: {x:160, y:0, w:16, h:16},
-  6: {x:176, y:0, w:16, h:16},
-}
+// const interiorWalls = {
+//   1: {x:144, y:0, w:48, h:48},
+//   2: {x:112, y:0, w:16, h:16},
+//   3: {x:128, y:0, w:16, h:16},
+//   4: {x:144, y:0, w:16, h:16},
+//   5: {x:160, y:0, w:16, h:16},
+//   6: {x:176, y:0, w:16, h:16},
+// }
 
-const floorTiles = {
-  1: {x:0, y:16, w:48, h:48},
-  2: {x:112, y:16, w:16, h:16},
-  3: {x:128, y:16, w:16, h:16},
-  4: {x:144, y:16, w:16, h:16},
-  5: {x:160, y:16, w:16, h:16},
-  6: {x:176, y:16, w:16, h:16},
-}
+// const floorTiles = {
+//   1: {x:0, y:16, w:48, h:48},
+//   2: {x:112, y:16, w:16, h:16},
+//   3: {x:128, y:16, w:16, h:16},
+//   4: {x:144, y:16, w:16, h:16},
+//   5: {x:160, y:16, w:16, h:16},
+//   6: {x:176, y:16, w:16, h:16},
+// }
 
-const keycards = {
-  
-}
 
 const tileTypes = {
   0: { name: "wall", sprite:[{x:288, y:96, w:48, h:48}], color: "white", floor: floorTypes.solid },
@@ -394,6 +394,8 @@ const tileTypes = {
 
     tileset = new Image();
     monsterSet = new Image();
+    spaceImage = new Image()
+    
 
     tileset.onerror = function(e) {
       ctx = null;
@@ -415,7 +417,7 @@ const tileTypes = {
 
     tileset.src = tilesetURL;
     monsterSet.src = characterTilesetUrl;
-    console.log(monsterSet)
+    spaceImage.src = spaceImageUrl;
   };
 
 
@@ -492,15 +494,8 @@ const tileTypes = {
 
     viewport.update(player.position[0] + (player.dimensions[0]/2), player.position[1] + (player.dimensions[1]/2))
     
-    //const randomSpaceTileGenerator = Math.floor(Math.random()* 4) + 1
-    const spaceTiles = {
-      1: {x:192, y:1008, w:192, h:48 },
-      2: {x:240, y:1008, w:48, h:48 },
-      3: {x:288, y:1008, w:48, h:48 },
-      4: {x:336, y:1008, w:48, h:48 },
-    }
-
-    ctx.drawImage(tileset, spaceTiles[1].x, spaceTiles[1].y, spaceTiles[1].w, spaceTiles[1].h,  0, 0, viewport.screen[0], viewport.screen[1]);
+    //viewport image
+    ctx.drawImage(spaceImage, 0, 0, 800, 800,  0, 0, viewport.screen[0], viewport.screen[1]);
 
     
     
