@@ -24,3 +24,8 @@ export const DIRECTIONS = {
     DOWNRIGHT: { DIRS: [1, 1], FACING: "RIGHT" },
   }
 
+export const ASSETURLS = {
+  tilesetUrl: "./assets/tiny_galaxy_world.png",
+  characterTilesetUrl: "./assets/tiny_galaxy_monsters.png",
+  spaceImageUrl: "./assets/space.png",
+} 

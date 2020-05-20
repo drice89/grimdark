@@ -1,17 +1,13 @@
 import Game from "./game"
+import { ASSETURLS } from "./util"
 
-const tileW = window.tileW = 48
-const tileH = window.tileH = 48;
-const mapW = window.mapW = 64;
-const mapH = window.mapH = 64;
+window.tileW = 48
+window.tileH = 48;
+window.mapW = 64;
+window.mapH = 64;
 window.tileset = new Image();
 window.monsterSet = new Image();
 window.spaceImage = new Image()
-const assetUrls ={
-  tilesetURL: "./assets/tiny_galaxy_world.png",
-  characterTilesetUrl: "./assets/tiny_galaxy_monsters.png",
-  spaceImageUrl: "./assets/space.png",
-} 
 window.ctx = null
 window.tilesetLoaded = false 
 window.monsterSetLoaded = false; 
@@ -21,8 +17,9 @@ window.framesLastSecond = 0;
 window.lastFrameTime = 0;
 
 
+
 window.onload = function() {
-  /// revisit
+  
 
   window.tileset.onerror = function(e) {
     window.ctx = null;
@@ -42,10 +39,9 @@ window.onload = function() {
   window.tileset.onload = function() { window.tilesetLoaded = true };
   window.monsterSet.onload = function() { window.monsterSetLoaded = true }
   //revisit 
-
-  window.tileset.src = assetUrls.tilesetURL;
-  window.monsterSet.src = assetUrls.characterTilesetUrl;
-  window.spaceImage.src = assetUrls.spaceImageUrl;
+  window.tileset.src = ASSETURLS.tilesetUrl;
+  window.monsterSet.src = ASSETURLS.characterTilesetUrl;
+  window.spaceImage.src = ASSETURLS.spaceImageUrl;
   const game = document.getElementById("game")
   window.ctx = game.getContext('2d');
   const newGame = new Game([game.width, game.height])
@@ -61,14 +57,11 @@ window.onload = function() {
       newGame.keysDown[e.keyCode] = false;
     }
   });
-  //this is setting the viewport screen area 
   
   requestAnimationFrame(newGame.drawGame);
 };
 
 
-
-//viewport
 
 
 
