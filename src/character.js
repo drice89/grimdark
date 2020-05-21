@@ -24,8 +24,8 @@ class Character {
     }
     this.movementAnimation = "false"
   }
-  currentPostion() {
-    return this.tileFrom[0] + (mapW * this.tileFrom[1])
+  currentPosition() {
+    return (this.tileFrom[0] + (mapW * this.tileFrom[1]))
   }
 }
 //this function is dependent upon globals - maybe do tileW = this.tileW.bind(this)
@@ -47,11 +47,9 @@ Character.prototype.processMovement = function(time) {
   if (this.tileFrom[0] === this.tileTo[0] && this.tileFrom[1] === this.tileTo[1]) {
     return false
   } 
-  console.log(time - this.timeMoved)
   if((time - this.timeMoved) >= this.delayMove) {
     this.placeAt(this.tileTo[0], this.tileTo[1])
     this.movementAnimation = !this.movementAnimation
-    console.log(this)
   } else {
     //below block gives pixel value starting position
     this.position[0] = (this.tileFrom[0] * tileW) + ((tileW - this.dimensions[0])/2);
