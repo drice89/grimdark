@@ -8,14 +8,10 @@ class Character {
     this.timeMoved = 0;
     //this is the dimension of the character sprite
     this.dimensions = [48, 48];
-    this.position = [51,51]
+    this.position = [49,49]
     //movement speed
-    this.delayMove = 100;
+    this.delayMove = 150;
     this.facing = "DOWN"
-    this.LEFT = "LEFT"
-    this.RIGHT = "RIGHT"
-    this.UP = "UP"
-    this.DOWN = "DOWN"
     this.playerSprites = {
       "UP": [{x:96, y:0, w:47, h:47}, {x:96, y:48, w:47, h:47}],
       "DOWN": [{x:48, y:0, w:47, h:47}, {x:48, y:48, w:47, h:47}],
@@ -31,9 +27,11 @@ Character.prototype.placeAt = function(x,y) {
   this.tileTo = [x, y];
   this.position = [
     (
+        //multiply row tile value * size of tile
+        //add tile width - the xdimension /2 in order to center horizontally
       (tileW * x) + ((tileW - this.dimensions[0])/2)
     ),(
-      (tileH * y) + ((tileH-this.dimensions[1])/2)
+      (tileH * y) + ((tileH - this.dimensions[1])/2)
       )
   ]
 }
@@ -42,15 +40,15 @@ Character.prototype.processMovement = function(time) {
   if (this.tileFrom[0] === this.tileTo[0] && this.tileFrom[1] === this.tileTo[1]) {
     return false
   } 
+  console.log(time - this.timeMoved)
   if((time - this.timeMoved) >= this.delayMove) {
     this.placeAt(this.tileTo[0], this.tileTo[1])
     this.movementAnimation = !this.movementAnimation
+    console.log(this)
   } else {
     //below block gives pixel value starting position
     this.position[0] = (this.tileFrom[0] * tileW) + ((tileW - this.dimensions[0])/2);
-    // console.log("x", this.position[0])
     this.position[1] = (this.tileFrom[1] * tileH) + ((tileH - this.dimensions[1])/2);
-    // console.log("y", this.position[1])
 
     //check if char is moving horizontally
     if(this.tileTo[0] !== this.tileFrom[0]) {
@@ -61,9 +59,9 @@ Character.prototype.processMovement = function(time) {
     //check if char is moving vertically
     if(this.tileTo[1] != this.tileFrom[1]){
 			var diff = (tileH / this.delayMove) * (time - this.timeMoved);
-			this.position[1]+= (this.tileTo[1]<this.tileFrom[1] ? 0 - diff : diff);
+      this.position[1]+= (this.tileTo[1]<this.tileFrom[1] ? 0 - diff : diff);
 		}
-
+    
     this.position[0] = Math.round(this.position[0])
     this.position[1] = Math.round(this.position[1])
   }
@@ -73,59 +71,13 @@ Character.prototype.processMovement = function(time) {
 //this function is dependent upon globals - needs to go in the map
 
 
-Character.prototype.canMoveUp = function() { return this.isValidMove(this.tileFrom[0], (this.tileFrom[1] - 1)) }
-Character.prototype.canMoveDown = function() { return this.isValidMove(this.tileFrom[0], (this.tileFrom[1] + 1)) }
-Character.prototype.canMoveLeft = function() { return this.isValidMove((this.tileFrom[0] - 1), this.tileFrom[1]) }
-Character.prototype.canMoveRight = function() { return this.isValidMove((this.tileFrom[0] + 1), this.tileFrom[1]) }
-Character.prototype.canMoveUpLeft = function() { return this.isValidMove((this.tileFrom[0] - 1), (this.tileFrom[1] - 1)) }
-Character.prototype.canMoveUpRight = function() { return this.isValidMove((this.tileFrom[0] + 1), (this.tileFrom[1] - 1)) }
-Character.prototype.canMoveDownLeft = function() { return this.isValidMove((this.tileFrom[0] - 1), (this.tileFrom[1] + 1)) }
-Character.prototype.canMoveDownRight = function() { return this.isValidMove((this.tileFrom[0] + 1), (this.tileFrom[1] + 1)) }
-
 Character.prototype.move = function(direction, time) {
   this.tileTo[0] += direction.DIRS[0]
   this.tileTo[1] += direction.DIRS[1]
   this.timeMoved = time
   this.facing = direction.FACING
-  // switch(direction) {
-  //   case "UPLEFT":
-  //     this.tileTo[0] -= 1
-  //     this.tileTo[1] -= 1
-  //     this.facing = this.LEFT
-  //     break;
-  //   case "UPRIGHT":
-  //     this.tileTo[0] += 1
-  //     this.tileTo[1] -= 1
-  //     this.facing = this.RIGHT
-  //     break;
-  //   case "DOWNLEFT":
-  //     this.tileTo[0] -= 1
-  //     this.tileTo[1] += 1
-  //     this.facing = this.LEFT
-  //     break;
-  //   case "DOWNRIGHT":
-  //     this.tileTo[0] += 1
-  //     this.tileTo[1] += 1
-  //     this.facing = this.RIGHT
-  //     break;
-  //   case "UP":
-  //     this.tileTo[1] -= 1 
-  //     this.facing = this.UP
-  //     break;
-  //   case "DOWN":
-  //     this.tileTo[1] += 1
-  //     this.facing = this.DOWN
-  //     break;
-  //   case "LEFT":
-  //     this.tileTo[0] -= 1
-  //     this.facing = this.LEFT
-  //     break;
-  //   case "RIGHT":
-  //     this.tileTo[0] += 1
-  //     this.facing = this.RIGHT
-  //     break;
-  // }
-  
+  //console.log("tile to", this.tileTo[0], this.tileTo[1], direction)
+
 }
 
 
