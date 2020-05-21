@@ -23,10 +23,12 @@ class Character {
       "DOWNRIGHT": [{x:0, y:0, w:47, h:47}, {x:0, y:48, w:47, h:47}],
     }
     this.movementAnimation = "false"
+    this.rateOfFire = 100
+    this.lastBulletFired = 0
   }
   currentPosition() {
     return (this.tileFrom[0] + (mapW * this.tileFrom[1]))
-  }
+  }      
 }
 //this function is dependent upon globals - maybe do tileW = this.tileW.bind(this)
 Character.prototype.placeAt = function(x,y) {

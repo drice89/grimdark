@@ -10,7 +10,7 @@ class Bullet extends Character {
     this.position = null,
     this.delayMove = 0,
     this.facing = direction,
-    this.dimensions = [12, 3]
+    this.dimensions = direction === "LEFT" || direction === "RIGHT" ? [12, 3] : [3, 12]
     this.bulletSprites = {
       "UP": [{x:192, y:192, w:47, h:47}, {x:192, y:192, w:47, h:47}],
       "DOWN": [{x:192, y:192, w:47, h:47}, {x:192, y:192, w:47, h:47}],

@@ -44,14 +44,16 @@ class Game {
     }
 
     //////// generate bullet
-    if(this.keysDown[32]) {
+    if(this.keysDown[32] && (currentFrameTime - this.player.lastBulletFired) > this.player.rateOfFire) {
+
       let bullet = new Bullet(this.player.facing)
-      bullet.placeAt(...this.player.tileFrom)
+      bullet.placeAt(this.player.tileFrom[0] + (DIRECTIONS[bullet.facing].DIRS[0]), this.player.tileFrom[1] + (DIRECTIONS[bullet.facing].DIRS[1]))
       console.log("bullet placed at", bullet.position)
       this.bullets[bullet.currentPosition()] = bullet
+      this.player.lastBulletFired = currentFrameTime
     }
 
-     this.viewport.update(this.player.position[0] + (this.player.dimensions[0]/2), 
+    this.viewport.update(this.player.position[0] + (this.player.dimensions[0]/2), 
     this.player.position[1] + (this.player.dimensions[1]/2))
     this.renderViewportImage()
     this.renderMap()
