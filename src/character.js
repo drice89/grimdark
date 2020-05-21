@@ -10,15 +10,22 @@ class Character {
     this.dimensions = [48, 48];
     this.position = [49,49]
     //movement speed
-    this.delayMove = 0;
+    this.delayMove = 250;
     this.facing = "DOWN"
     this.playerSprites = {
       "UP": [{x:96, y:0, w:47, h:47}, {x:96, y:48, w:47, h:47}],
       "DOWN": [{x:48, y:0, w:47, h:47}, {x:48, y:48, w:47, h:47}],
       "LEFT": [{x:144, y:0, w:47, h:47}, {x:144, y:48, w:47, h:47}],
       "RIGHT": [{x:0, y:0, w:47, h:47}, {x:0, y:48, w:47, h:47}],
+      "UPLEFT": [{x:144, y:0, w:47, h:47}, {x:144, y:48, w:47, h:47}],
+      "UPRIGHT": [{x:0, y:0, w:47, h:47}, {x:0, y:48, w:47, h:47}],
+      "DOWNLEFT": [{x:144, y:0, w:47, h:47}, {x:144, y:48, w:47, h:47}],
+      "DOWNRIGHT": [{x:0, y:0, w:47, h:47}, {x:0, y:48, w:47, h:47}],
     }
     this.movementAnimation = "false"
+  }
+  currentPostion() {
+    return this.tileFrom[0] + (mapW * this.tileFrom[1])
   }
 }
 //this function is dependent upon globals - maybe do tileW = this.tileW.bind(this)

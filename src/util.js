@@ -18,14 +18,16 @@ export const DIRECTIONS = {
     DOWN: { DIRS: [0, 1], FACING: "DOWN" },
     LEFT: { DIRS: [-1, 0], FACING: "LEFT" },
     RIGHT: { DIRS: [1,0], FACING: "RIGHT" },
-    UPLEFT: { DIRS: [-1,-1], FACING: "LEFT" },
-    UPRIGHT: { DIRS: [1, -1], FACING: "RIGHT" },
-    DOWNLEFT: { DIRS: [-1, 1], FACING: "LEFT" },
-    DOWNRIGHT: { DIRS: [1, 1], FACING: "RIGHT" },
+    UPLEFT: { DIRS: [-1,-1], FACING: "UPLEFT" },
+    UPRIGHT: { DIRS: [1, -1], FACING: "UPRIGHT" },
+    DOWNLEFT: { DIRS: [-1, 1], FACING: "DOWNLEFT" },
+    DOWNRIGHT: { DIRS: [1, 1], FACING: "DOWNRIGHT" },
   }
 
 export const ASSETURLS = {
   tilesetUrl: "./assets/tiny_galaxy_world.png",
   characterTilesetUrl: "./assets/tiny_galaxy_monsters.png",
+  fxSetUrl: "./assets/tiny_galaxy_fx.png",
   spaceImageUrl: "./assets/space.png",
+  
 } 
