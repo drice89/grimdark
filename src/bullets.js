@@ -1,15 +1,16 @@
 import Character from "./character"
-import { DIRECTIONS } from "./util"
+import { DIRECTIONS, TILETYPES, FLOORTYPES } from "./util"
 
 class Bullet extends Character {
   constructor(direction) {
     super()
+    this.valid = true;
     this.position = null,
     this.tileFrom = null,
     this.tileTo = null,
     this.sprite = {},
     this.position = null,
-    this.delayMove = 50,
+    this.delayMove = 100,
     this.facing = direction,
     this.dimensions = direction === "LEFT" || direction === "RIGHT" ? [12, 3] :
       direction === "UP" || direction === "DOWN" ? [3, 12] : [9, 10],
@@ -31,6 +32,10 @@ class Bullet extends Character {
     const indexOfNextPosition = ((this.tileTo[1] + dirs[1]) * mapW) + this.tileTo[0] + dirs[0]
     const monsterCurrentPosition = monsters[this.currentPosition()]
     const monsterNextPosition = monsters[indexOfNextPosition]
+    //console.log(dirs)
+    //console.log("bullet current position", monsterCurrentPosition)
+    //console.log("bullet next position", monsterNextPosition )
+
 
     if (monsterCurrentPosition) monsterCurrentPosition.alive = false
     if (monsterNextPosition) monsterNextPosition.alive = false
@@ -40,6 +45,14 @@ class Bullet extends Character {
     }
 
     return false
+  }
+
+  isValidMove(gameMap, direction = DIRECTIONS[this.facing]) {
+    const x = this.tileFrom[0] + direction.DIRS[0];
+    const y = this.tileFrom[1] + direction.DIRS[1]
+    if (x < 0 || x > (mapW-1) || y < 0 || y > mapH-1) return false;
+    if(TILETYPES[gameMap.map[this.toIndex(x,y)]].floor !== FLOORTYPES.open) return false;
+    return true
   }
 
 }
