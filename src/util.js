@@ -29,4 +29,5 @@ export const ASSETURLS = {
   characterTilesetUrl: "./assets/tiny_galaxy_monsters.png",
   fxSetUrl: "./assets/tiny_galaxy_fx.png",
   spaceImageUrl: "./assets/space.png",
+  hootsforce: "./assets/Gloryhammer-hootsforce.mp3"
 } 

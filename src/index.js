@@ -24,7 +24,6 @@ window.lastFrameTime = 0;
 
 window.onload = function() {
   
-
   window.tileset.onerror = function(e) {
     window.ctx = null;
     alert("tileset load error", e.message);
@@ -54,26 +53,38 @@ window.onload = function() {
   window.fxSet.src = ASSETURLS.fxSetUrl;
   window.spaceImage.src = ASSETURLS.spaceImageUrl;
 
-  const game = document.getElementById("game")
-  window.ctx = game.getContext('2d');
-  const newGame = new Game([game.width, game.height])
-  window.ctx.font = "bold 10pt sans-serif";
-  
-  window.addEventListener("keydown", (e) => {
-    if ((e.keyCode >= 37 && e.keyCode <= 40) || e.keyCode === 32) {
-      newGame.keysDown[e.keyCode] = true;
-    }
-  });
-  window.addEventListener("keyup", (e) => {
-    if ((e.keyCode >= 37 && e.keyCode <= 40) || e.keyCode === 32) {
-      newGame.keysDown[e.keyCode] = false;
-    }
-  });
-
-
-  
-  requestAnimationFrame(newGame.drawGame);
 };
+
+document.addEventListener("DOMContentLoaded", () => { 
+  const start = document.getElementById("start")
+  start.addEventListener( "click", () =>{
+    document.querySelectorAll(".welcome")[0].setAttribute("class", "hidden")
+    document.getElementById("game").setAttribute("class", "show")
+    const music = new Audio(ASSETURLS.hootsforce)
+    music.play();
+  
+    const game = document.getElementById("game")
+    window.ctx = game.getContext('2d');
+    const newGame = new Game([game.width, game.height])
+    window.ctx.font = "bold 10pt sans-serif";
+    
+    window.addEventListener("keydown", (e) => {
+      if ((e.keyCode >= 37 && e.keyCode <= 40) || e.keyCode === 32) {
+        newGame.keysDown[e.keyCode] = true;
+      }
+    });
+    window.addEventListener("keyup", (e) => {
+      if ((e.keyCode >= 37 && e.keyCode <= 40) || e.keyCode === 32) {
+        newGame.keysDown[e.keyCode] = false;
+      }
+    });
+  
+    
+    requestAnimationFrame(newGame.drawGame);
+  })
+  
+
+});  
 
 
 
