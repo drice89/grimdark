@@ -28,19 +28,10 @@ class Bullet extends Character {
   }
 
   detectCollision(monsters){
-    const dirs = DIRECTIONS[this.facing].DIRS
-    const indexOfNextPosition = ((this.tileTo[1] + dirs[1]) * mapW) + this.tileTo[0] + dirs[0]
     const monsterCurrentPosition = monsters[this.currentPosition()]
-    const monsterNextPosition = monsters[indexOfNextPosition]
-    //console.log(dirs)
-    //console.log("bullet current position", monsterCurrentPosition)
-    //console.log("bullet next position", monsterNextPosition )
 
-
-    if (monsterCurrentPosition) monsterCurrentPosition.alive = false
-    if (monsterNextPosition) monsterNextPosition.alive = false
-
-    if (monsterCurrentPosition || monsterNextPosition) {
+    if (monsterCurrentPosition) {
+      monsterCurrentPosition.alive = false
       return true
     }
 

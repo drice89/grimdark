@@ -21,7 +21,7 @@ class Game {
     }
     this.monsters = {}
     this.spawnRate = 6
-    this.maxSpawns = 0
+    this.maxSpawns = 60
     this.currentSpawns = 0
     this.score = 0
     this.drawGame = () => {
@@ -110,28 +110,22 @@ class Game {
     
     let monsterMap = {}
     for(let monster in this.monsters) {
-      //this is the monster
       monster = this.monsters[monster]
+
       //if this is true then do not render
-      if (!monster.alive) {
-        this.increaseScore()
-        continue;
-      }
+      if (!monster.alive) continue;
+
       if(!monster.processMovement(currentFrameTime)) {
         let direction = DIRECTIONS[monster.determineDirection(this.player.position)]
         while(!this.isValidMonsterMove(monster, direction, TILETYPES, FLOORTYPES)) {
-        direction = DIRECTIONS[Monster.resolveCollision(direction)]
+          direction = DIRECTIONS[Monster.resolveCollision(direction)]
         }
-        // if (monster.alive) {
-        //   if (monster.checkNextPositionForBullets(this.bullets, direction)) this.increaseScore()
-          monster.move(direction, currentFrameTime)
-          // monster.bulletEnteredTile = false
-        //}
-        //for bullet
+        monster.move(direction, currentFrameTime)
+
       }
       this.renderMonster(monster);
       //might be redundant
-      if (monster.alive) monsterMap[this.toIndex(...monster.position)] = monster;
+      if (monster.alive) monsterMap[this.toIndex(...monster.tileFrom)] = monster;
     }
     this.monsters = monsterMap;
     this.renderPlayer();
