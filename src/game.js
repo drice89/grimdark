@@ -4,13 +4,16 @@ import Map from "./map";
 import { levelOne } from "./levels"
 import { FLOORTYPES, TILETYPES, DIRECTIONS } from "./util"
 import Monster from "./monsters"
+import Bullet from "./bullets"
 
 class Game {
   constructor(viewportDimensions) {
     this.gameMap = new Map(levelOne)
     this.player = new Character()
     this.viewport = new Viewport(viewportDimensions)
+    this.bullets = {}
     this.keysDown = {
+      32: false, //spacebar
       37: false, //left arrow
       39: false, //right arrow
       38: false, //up arrow
@@ -22,11 +25,10 @@ class Game {
     this.currentSpawns = 0
     this.drawGame = () => {
 
-    if(window.ctx === null) return;
-    if(!window.tilesetLoaded || !window.monsterSetLoaded) {
+    if(ctx === null) return;
+    if(!tilesetLoaded || !monsterSetLoaded || !fxSetLoaded) {
       requestAnimationFrame(this.drawGame)
-      console.log(monsterSetLoaded)
-      return
+      return;
     }
     
     const currentFrameTime = Date.now()
@@ -40,6 +42,24 @@ class Game {
     } else {
       frameCount ++
     }
+
+    //////// generate bullet
+    if(this.keysDown[32] && (currentFrameTime - this.player.lastBulletFired) > this.player.rateOfFire) {
+
+      let bullet = new Bullet(this.player.facing)
+      bullet.placeAt(this.player.tileFrom[0] + (DIRECTIONS[bullet.facing].DIRS[0]), this.player.tileFrom[1] + (DIRECTIONS[bullet.facing].DIRS[1]))
+      console.log("bullet placed at", bullet.position)
+      this.bullets[bullet.currentPosition()] = bullet
+      this.player.lastBulletFired = currentFrameTime
+    }
+
+    this.viewport.update(this.player.position[0] + (this.player.dimensions[0]/2), 
+    this.player.position[1] + (this.player.dimensions[1]/2))
+    this.renderViewportImage()
+    this.renderMap()
+    this.moveAndRenderBullets(currentFrameTime)
+    //// generate monster
+    if (!(sec%6) && this.currentSpawns < this.maxSpawns) this.placeMonster(TILETYPES,FLOORTYPES)
   
     //Player movement//////////////////////////////////////////////////////
     if (!this.player.processMovement(currentFrameTime)) {
@@ -85,23 +105,26 @@ class Game {
       }
     }
     ////////////////////////////////////////////////////////////////
-    this.viewport.update(this.player.position[0] + (this.player.dimensions[0]/2), 
-    this.player.position[1] + (this.player.dimensions[1]/2))
-    this.renderViewportImage()
-    this.renderMap()
+    // this.viewport.update(this.player.position[0] + (this.player.dimensions[0]/2), 
+    // this.player.position[1] + (this.player.dimensions[1]/2))
+    // this.renderViewportImage()
+    // this.renderMap()
+    // this.moveAndRenderBullets(currentFrameTime)
+
     //monsters
-    if (!(sec%6) && this.currentSpawns < this.maxSpawns) this.placeMonster(TILETYPES,FLOORTYPES)
+    
     let monsterMap = {}
     for(let monster in this.monsters) {
       monster = this.monsters[monster]
-      
-      let direction = DIRECTIONS[monster.determineDirection(this.player.position)]
-      while(!this.isValidMonsterMove(monster, direction, TILETYPES, FLOORTYPES)) {
-        direction = DIRECTIONS[Monster.resolveCollision(direction)]
-        console.log(direction)
-      }
       if(!monster.processMovement(currentFrameTime)) {
+        let direction = DIRECTIONS[monster.determineDirection(this.player.position)]
+        while(!this.isValidMonsterMove(monster, direction, TILETYPES, FLOORTYPES)) {
+        direction = DIRECTIONS[Monster.resolveCollision(direction)]
+      }
         monster.move(direction, currentFrameTime)
+        //for bullet
+        monster.bulletEnteredTile = false
+        //
       }
       this.renderMonster(monster);
       monsterMap[this.toIndex(...monster.position)] = monster;
@@ -120,10 +143,6 @@ class Game {
   }
   renderMonster(monster) {
     let spriteIndex = (monster.movementAnimation) ? 0 : 1
-
-    
-    // window.ctx.drawImage(window.monsterSet, 48, 0, 47, 47,  monster.position[0], monster.position[1], monster.dimensions[0], monster.dimensions[1]);
-
     window.ctx.drawImage(window.monsterSet, monster.monsterSprites[monster.facing][spriteIndex].x, monster.monsterSprites[monster.facing][spriteIndex].y, monster.monsterSprites[monster.facing][spriteIndex].w, monster.monsterSprites[monster.facing][spriteIndex].h, (this.viewport.offset[0] + monster.position[0]), (this.viewport.offset[1]+ monster.position[1]), monster.dimensions[0], monster.dimensions[1]);
   }
 
@@ -158,9 +177,15 @@ class Game {
    renderMap() {
      for(let y = this.viewport.startTile[1]; y <= this.viewport.endTile[1]; y++) {
       for(let x = this.viewport.startTile[0]; x <= this.viewport.endTile[0]; x++) {
+        const index = this.toIndex(x,y)
         const tile = TILETYPES[this.gameMap.map[this.toIndex(x,y)]];
-            window.ctx.drawImage(window.tileset, tile.sprite[0].x, tile.sprite[0].y, tile.sprite[0].w, tile.sprite[0].h, 
+        let spriteIndex = tile.name === "wall" && this.gameMap.map[index + 64] ? 1 : 0
+        try {
+          window.ctx.drawImage(window.tileset, tile.sprite[spriteIndex].x, tile.sprite[spriteIndex].y, tile.sprite[spriteIndex].w, tile.sprite[spriteIndex].h, 
             (this.viewport.offset[0] + (x * tileW)), (this.viewport.offset[1] + (y*tileH)), tileW, tileH);
+          } catch(err) {
+            console.log(this.gameMap.map[index + 64])
+          }
       }
     }
   }
@@ -185,9 +210,25 @@ class Game {
     monster.placeAt(...monsterPosition)
     this.monsters[this.toIndex(...monsterPosition)] = monster
     this.currentSpawns += 1
-    console.log("monster created")
   }
   
+  moveAndRenderBullets(currentFrameTime) {
+  let bullets = {}
+  for(let bullet in this.bullets) {
+    bullet = this.bullets[bullet]
+    if(!bullet.processMovement(currentFrameTime)) {
+      bullet.move(DIRECTIONS[bullet.facing], currentFrameTime)
+      //console.log(this.player.position)
+      //console.log("bullet", bullet.position)
+    }
+    bullets[bullet.currentPosition()] = bullet
+    let spriteIndex = (bullet.movementAnimation) ? 0 : 1
+    window.ctx.drawImage(window.fxSet, bullet.bulletSprites[bullet.facing][spriteIndex].x, bullet.bulletSprites[bullet.facing][spriteIndex].y, bullet.bulletSprites[bullet.facing][spriteIndex].w, bullet.bulletSprites[bullet.facing][spriteIndex].h, (this.viewport.offset[0] + bullet.position[0]), (this.viewport.offset[1]+ bullet.position[1]), bullet.dimensions[0], bullet.dimensions[1]);
+
+   } 
+   this.bullets = bullets
+}
+
 }
   
 

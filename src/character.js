@@ -10,16 +10,25 @@ class Character {
     this.dimensions = [48, 48];
     this.position = [49,49]
     //movement speed
-    this.delayMove = 0;
+    this.delayMove = 250;
     this.facing = "DOWN"
     this.playerSprites = {
       "UP": [{x:96, y:0, w:47, h:47}, {x:96, y:48, w:47, h:47}],
       "DOWN": [{x:48, y:0, w:47, h:47}, {x:48, y:48, w:47, h:47}],
       "LEFT": [{x:144, y:0, w:47, h:47}, {x:144, y:48, w:47, h:47}],
       "RIGHT": [{x:0, y:0, w:47, h:47}, {x:0, y:48, w:47, h:47}],
+      "UPLEFT": [{x:96, y:0, w:47, h:47}, {x:96, y:48, w:47, h:47}],
+      "UPRIGHT": [{x:96, y:0, w:47, h:47}, {x:96, y:48, w:47, h:47}],
+      "DOWNLEFT": [{x:48, y:0, w:47, h:47}, {x:48, y:48, w:47, h:47}],
+      "DOWNRIGHT": [{x:48, y:0, w:47, h:47}, {x:48, y:48, w:47, h:47}],
     }
     this.movementAnimation = "false"
+    this.rateOfFire = 100
+    this.lastBulletFired = 0
   }
+  currentPosition() {
+    return (this.tileFrom[0] + (mapW * this.tileFrom[1]))
+  }      
 }
 //this function is dependent upon globals - maybe do tileW = this.tileW.bind(this)
 Character.prototype.placeAt = function(x,y) {
@@ -40,11 +49,9 @@ Character.prototype.processMovement = function(time) {
   if (this.tileFrom[0] === this.tileTo[0] && this.tileFrom[1] === this.tileTo[1]) {
     return false
   } 
-  console.log(time - this.timeMoved)
   if((time - this.timeMoved) >= this.delayMove) {
     this.placeAt(this.tileTo[0], this.tileTo[1])
     this.movementAnimation = !this.movementAnimation
-    console.log(this)
   } else {
     //below block gives pixel value starting position
     this.position[0] = (this.tileFrom[0] * tileW) + ((tileW - this.dimensions[0])/2);

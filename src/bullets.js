@@ -1,21 +1,30 @@
 import Character from "./character"
+
 class Bullet extends Character {
-  constructor() {
+  constructor(direction) {
     super()
-    this.direction = null
-    this.position = null
-    this.tileFrom = null
-    this.tileTo = null
-    this.sprite = {}
-    this.position = null
-    this.delayMove = 000;
-    this.facing = null
-    this.monsterSprites = {
-      "UP": [{x:96, y:576, w:47, h:47}, {x:96, y:624, w:47, h:47}],
-      "DOWN": [{x:48, y:576, w:47, h:47}, {x:48, y:624, w:47, h:47}],
-      "LEFT": [{x:144, y:576, w:47, h:47}, {x:144, y:624, w:47, h:47}],
-      "RIGHT": [{x:0, y:576, w:47, h:47}, {x:0, y:624, w:47, h:47}],
-    }
+    this.position = null,
+    this.tileFrom = null,
+    this.tileTo = null,
+    this.sprite = {},
+    this.position = null,
+    this.delayMove = 0,
+    this.facing = direction,
+    this.dimensions = direction === "LEFT" || direction === "RIGHT" ? [12, 3] :
+      direction === "UP" || direction === "DOWN" ? [3, 12] : [9, 10],
+    this.bulletSprites = {
+      "UP": [{x:212, y:210, w:3, h:12}, {x:212, y:210, w:3, h:12}],
+      "DOWN": [{x:212, y:210, w:3, h:12}, {x:212, y:210, w:3, h:12}],
+      "LEFT": [{x:18, y:213, w:12, h:3}, {x:18, y:213, w:12, h:3}],
+      "RIGHT": [{x:18, y:213, w:12, h:3}, {x:18, y:213, w:12, h:3}],
+      "UPLEFT": [{x:116, y:209, w:9, h:10}, {x:116, y:209, w:9, h:10}],
+      "UPRIGHT": [{x:305, y:209, w:9, h:10}, {x:305, y:209, w:9, h:10}],
+      "DOWNLEFT": [{x:305, y:209, w:9, h:10}, {x:305, y:209, w:9, h:10}],
+      "DOWNRIGHT": [{x:116, y:209, w:9, h:10}, {x:116, y:209, w:9, h:10}],
+    },
     this.movementAnimation = "false"
   }
+
 }
+
+export default Bullet
