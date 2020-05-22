@@ -10,16 +10,17 @@ class Bullet extends Character {
     this.position = null,
     this.delayMove = 0,
     this.facing = direction,
-    this.dimensions = direction === "LEFT" || direction === "RIGHT" ? [12, 3] : [3, 12]
+    this.dimensions = direction === "LEFT" || direction === "RIGHT" ? [12, 3] :
+      direction === "UP" || direction === "DOWN" ? [3, 12] : [9, 10],
     this.bulletSprites = {
-      "UP": [{x:192, y:192, w:47, h:47}, {x:192, y:192, w:47, h:47}],
-      "DOWN": [{x:192, y:192, w:47, h:47}, {x:192, y:192, w:47, h:47}],
+      "UP": [{x:212, y:210, w:3, h:12}, {x:212, y:210, w:3, h:12}],
+      "DOWN": [{x:212, y:210, w:3, h:12}, {x:212, y:210, w:3, h:12}],
       "LEFT": [{x:18, y:213, w:12, h:3}, {x:18, y:213, w:12, h:3}],
       "RIGHT": [{x:18, y:213, w:12, h:3}, {x:18, y:213, w:12, h:3}],
-      "UPLEFT": [{x:96, y:192, w:47, h:47}, {x:96, y:192, w:47, h:47}],
-      "UPRIGHT": [{x:288, y:192, w:47, h:47}, {x:288, y:192, w:47, h:47}],
-      "DOWNLEFT": [{x:288, y:192, w:47, h:47}, {x:288, y:192, w:47, h:47}],
-      "DOWNRIGHT": [{x:96, y:192, w:47, h:47}, {x:96, y:192, w:47, h:47}],
+      "UPLEFT": [{x:116, y:209, w:9, h:10}, {x:116, y:209, w:9, h:10}],
+      "UPRIGHT": [{x:305, y:209, w:9, h:10}, {x:305, y:209, w:9, h:10}],
+      "DOWNLEFT": [{x:305, y:209, w:9, h:10}, {x:305, y:209, w:9, h:10}],
+      "DOWNRIGHT": [{x:116, y:209, w:9, h:10}, {x:116, y:209, w:9, h:10}],
     },
     this.movementAnimation = "false"
   }

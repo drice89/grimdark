@@ -17,10 +17,10 @@ class Character {
       "DOWN": [{x:48, y:0, w:47, h:47}, {x:48, y:48, w:47, h:47}],
       "LEFT": [{x:144, y:0, w:47, h:47}, {x:144, y:48, w:47, h:47}],
       "RIGHT": [{x:0, y:0, w:47, h:47}, {x:0, y:48, w:47, h:47}],
-      "UPLEFT": [{x:144, y:0, w:47, h:47}, {x:144, y:48, w:47, h:47}],
-      "UPRIGHT": [{x:0, y:0, w:47, h:47}, {x:0, y:48, w:47, h:47}],
-      "DOWNLEFT": [{x:144, y:0, w:47, h:47}, {x:144, y:48, w:47, h:47}],
-      "DOWNRIGHT": [{x:0, y:0, w:47, h:47}, {x:0, y:48, w:47, h:47}],
+      "UPLEFT": [{x:96, y:0, w:47, h:47}, {x:96, y:48, w:47, h:47}],
+      "UPRIGHT": [{x:96, y:0, w:47, h:47}, {x:96, y:48, w:47, h:47}],
+      "DOWNLEFT": [{x:48, y:0, w:47, h:47}, {x:48, y:48, w:47, h:47}],
+      "DOWNRIGHT": [{x:48, y:0, w:47, h:47}, {x:48, y:48, w:47, h:47}],
     }
     this.movementAnimation = "false"
     this.rateOfFire = 100

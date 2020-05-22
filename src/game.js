@@ -177,9 +177,15 @@ class Game {
    renderMap() {
      for(let y = this.viewport.startTile[1]; y <= this.viewport.endTile[1]; y++) {
       for(let x = this.viewport.startTile[0]; x <= this.viewport.endTile[0]; x++) {
+        const index = this.toIndex(x,y)
         const tile = TILETYPES[this.gameMap.map[this.toIndex(x,y)]];
-            window.ctx.drawImage(window.tileset, tile.sprite[0].x, tile.sprite[0].y, tile.sprite[0].w, tile.sprite[0].h, 
+        let spriteIndex = tile.name === "wall" && this.gameMap.map[index + 64] ? 1 : 0
+        try {
+          window.ctx.drawImage(window.tileset, tile.sprite[spriteIndex].x, tile.sprite[spriteIndex].y, tile.sprite[spriteIndex].w, tile.sprite[spriteIndex].h, 
             (this.viewport.offset[0] + (x * tileW)), (this.viewport.offset[1] + (y*tileH)), tileW, tileH);
+          } catch(err) {
+            console.log(this.gameMap.map[index + 64])
+          }
       }
     }
   }
