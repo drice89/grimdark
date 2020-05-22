@@ -1,4 +1,5 @@
 import Character from "./character"
+import { DIRECTIONS, FLOORTYPES, TILETYPES } from "./util"
 
 class Monster extends Character {
   constructor() {
@@ -37,50 +38,43 @@ class Monster extends Character {
     return y + x
  }
 
-
- checkCurrentPositionForBullets(bullets) {
-   //should ensure that if the monster is moving on this frame, it does not get hit
-   debugger
-   if(bullets[this.currentPostion] && this.bulletEnteredTile) {
-     this.alive = false
-     return true
-   } 
-  //  else if(bullets[this.currentPostion]) {
-  //    this.bulletEnteredTile = true
-  //  }
-
-   return false
- }
-
- checkNextPositionForBullets(bullets, direction) {
-   let index = ((this.tileTo[1] + direction.DIRS[1]) * mapW) + this.tileTo[0] + direction.DIRS[0]
-   if(bullets[index]) {
-     this.alive = false;
-     return true
-   }
-   return false
- }
+  isValidMonsterMove(gameMap, direction = DIRECTIONS[this.facing], monstersLast, monstersNext) {
+    const x = this.tileFrom[0] + direction.DIRS[0];
+    const y = this.tileFrom[1] + direction.DIRS[1]
+    if (x < 0 || x > (mapW-1) || y < 0 || y > mapH-1) return false;
+    if(TILETYPES[gameMap.map[this.toIndex(x,y)]].floor !== FLOORTYPES.open) return false;
+    if (monstersLast[this.toIndex(x,y)] || monstersNext[this.toIndex(x,y)]) {
+      return false;
+    }
+    return true
+  }
 
   static resolveCollision(direction) {
-    switch(direction.FACING) {
-      case "UP":
-        return "RIGHT";
-      case "UPRIGHT":
-        return "UPLEFT"
-      case "UPLEFT":
-        return "DOWNLEFT"
-      case "DOWNLEFT":
-        return "DOWNRIGHT";
-      case "DOWNRIGHT":
-        return "UP"; 
-      case "RIGHT":
-        return "DOWN";
-      case "DOWN":
-        return "LEFT";
-      case "LEFT":
-        return "UPRIGHT";
+    let randomDirection = () => {
+      return Math.floor(Math.random() * 8) + 1
     }
+    const directions = {
+      1: "UP",
+      2: "UPRIGHT",
+      3: "UPLEFT",
+      4: "DOWNLEFT",
+      5: "DOWNRIGHT",
+      6: "RIGHT",
+      7: "DOWN",
+      8: "LEFT",
+    }
+
+    let newDirection = directions[randomDirection()]
+    debugger
+    while (newDirection === direction.FACING) {
+      newDirection = directions[randomDirection()]
+    }
+
+    return newDirection
+    
   }
+
+  
 }
 
 export default Monster

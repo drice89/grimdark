@@ -117,15 +117,20 @@ class Game {
 
       if(!monster.processMovement(currentFrameTime)) {
         let direction = DIRECTIONS[monster.determineDirection(this.player.position)]
-        while(!this.isValidMonsterMove(monster, direction, TILETYPES, FLOORTYPES)) {
+        console.log(direction)
+        let i = 2
+        while(!monster.isValidMonsterMove(this.gameMap, direction, this.monsters, monsterMap) && i > 0) {
+          //make 4 attempts to change direction
           direction = DIRECTIONS[Monster.resolveCollision(direction)]
+          i -= 1
+
         }
-        monster.move(direction, currentFrameTime)
+        if(i > 0 ) monster.move(direction, currentFrameTime)
 
       }
       this.renderMonster(monster);
       //might be redundant
-      if (monster.alive) monsterMap[this.toIndex(...monster.tileFrom)] = monster;
+      if (monster.alive) monsterMap[this.toIndex(...monster.tileTo)] = monster;
     }
     this.monsters = monsterMap;
     this.renderPlayer();
@@ -168,14 +173,14 @@ class Game {
     return true;
   }
 
-  isValidMonsterMove(monster, direction, TILETYPES, FLOORTYPES) {
-    const x = monster.tileFrom[0] + direction.DIRS[0];
-    const y = monster.tileFrom[1] + direction.DIRS[1];
-    if(x < 0 || x > (mapW-1) || y < 0 || y > mapH-1) return false;
-    if(TILETYPES[this.gameMap.map[this.toIndex(x,y)]].floor !== FLOORTYPES.open) return false;
-    if (this.monsters[this.gameMap.map[this.toIndex(x,y)]]) return false;
-    return true;
-  }
+  // isValidMonsterMove(monster, direction, TILETYPES, FLOORTYPES) {
+  //   const x = monster.tileFrom[0] + direction.DIRS[0];
+  //   const y = monster.tileFrom[1] + direction.DIRS[1];
+  //   if(x < 0 || x > (mapW-1) || y < 0 || y > mapH-1) return false;
+  //   if(TILETYPES[this.gameMap.map[this.toIndex(x,y)]].floor !== FLOORTYPES.open) return false;
+  //   if (this.monsters[this.gameMap.map[this.toIndex(x,y)]]) return false;
+  //   return true;
+  // }
   
 
    renderMap() {

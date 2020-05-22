@@ -1,4 +1,4 @@
-
+import { DIRECTIONS, FLOORTYPES, TILETYPES } from "./util"
 ////Character
 class Character {
   constructor() {
@@ -33,7 +33,15 @@ class Character {
   
   toIndex(x,y) {
     return ((y*mapW) + x);
-  }      
+  }
+  
+  isValidMove(gameMap, direction = DIRECTIONS[this.facing]) {
+    const x = this.tileFrom[0] + direction.DIRS[0];
+    const y = this.tileFrom[1] + direction.DIRS[1]
+    if (x < 0 || x > (mapW-1) || y < 0 || y > mapH-1) return false;
+    if(TILETYPES[gameMap.map[this.toIndex(x,y)]].floor !== FLOORTYPES.open) return false;
+    return true
+  }
 }
 //this function is dependent upon globals - maybe do tileW = this.tileW.bind(this)
 Character.prototype.placeAt = function(x,y) {
@@ -48,7 +56,6 @@ Character.prototype.placeAt = function(x,y) {
       (tileH * y) + ((tileH - this.dimensions[1])/2)
       )
   ]
-  console.log(this.tileFrom[0], this.tileFrom[1])
 }
 //this function is dependent upon globals
 Character.prototype.processMovement = function(time) {

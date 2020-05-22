@@ -38,13 +38,13 @@ class Bullet extends Character {
     return false
   }
 
-  isValidMove(gameMap, direction = DIRECTIONS[this.facing]) {
-    const x = this.tileFrom[0] + direction.DIRS[0];
-    const y = this.tileFrom[1] + direction.DIRS[1]
-    if (x < 0 || x > (mapW-1) || y < 0 || y > mapH-1) return false;
-    if(TILETYPES[gameMap.map[this.toIndex(x,y)]].floor !== FLOORTYPES.open) return false;
-    return true
-  }
+  // isValidMove(gameMap, direction = DIRECTIONS[this.facing]) {
+  //   const x = this.tileFrom[0] + direction.DIRS[0];
+  //   const y = this.tileFrom[1] + direction.DIRS[1]
+  //   if (x < 0 || x > (mapW-1) || y < 0 || y > mapH-1) return false;
+  //   if(TILETYPES[gameMap.map[this.toIndex(x,y)]].floor !== FLOORTYPES.open) return false;
+  //   return true
+  // }
 
 }
 
