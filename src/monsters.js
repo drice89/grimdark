@@ -40,12 +40,25 @@ class Monster extends Character {
 
  checkCurrentPositionForBullets(bullets) {
    //should ensure that if the monster is moving on this frame, it does not get hit
+   debugger
    if(bullets[this.currentPostion] && this.bulletEnteredTile) {
      this.alive = false
+     return true
    } 
-   else if(bullets[this.currentPostion]) {
-     this.bulletEnteredTile = true
+  //  else if(bullets[this.currentPostion]) {
+  //    this.bulletEnteredTile = true
+  //  }
+
+   return false
+ }
+
+ checkNextPositionForBullets(bullets, direction) {
+   let index = ((this.tileTo[1] + direction.DIRS[1]) * mapW) + this.tileTo[0] + direction.DIRS[0]
+   if(bullets[index]) {
+     this.alive = false;
+     return true
    }
+   return false
  }
 
   static resolveCollision(direction) {

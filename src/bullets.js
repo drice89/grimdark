@@ -1,4 +1,5 @@
 import Character from "./character"
+import { DIRECTIONS } from "./util"
 
 class Bullet extends Character {
   constructor(direction) {
@@ -8,7 +9,7 @@ class Bullet extends Character {
     this.tileTo = null,
     this.sprite = {},
     this.position = null,
-    this.delayMove = 0,
+    this.delayMove = 50,
     this.facing = direction,
     this.dimensions = direction === "LEFT" || direction === "RIGHT" ? [12, 3] :
       direction === "UP" || direction === "DOWN" ? [3, 12] : [9, 10],
@@ -23,6 +24,22 @@ class Bullet extends Character {
       "DOWNRIGHT": [{x:116, y:209, w:9, h:10}, {x:116, y:209, w:9, h:10}],
     },
     this.movementAnimation = "false"
+  }
+
+  detectCollision(monsters){
+    const dirs = DIRECTIONS[this.facing].DIRS
+    const indexOfNextPosition = ((this.tileTo[1] + dirs[1]) * mapW) + this.tileTo[0] + dirs[0]
+    const monsterCurrentPosition = monsters[this.currentPosition()]
+    const monsterNextPosition = monsters[indexOfNextPosition]
+
+    if (monsterCurrentPosition) monsterCurrentPosition.alive = false
+    if (monsterNextPosition) monsterNextPosition.alive = false
+
+    if (monsterCurrentPosition || monsterNextPosition) {
+      return true
+    }
+
+    return false
   }
 
 }

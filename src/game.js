@@ -23,6 +23,7 @@ class Game {
     this.spawnRate = 6
     this.maxSpawns = 50
     this.currentSpawns = 0
+    this.score = 0
     this.drawGame = () => {
 
     if(ctx === null) return;
@@ -115,26 +116,40 @@ class Game {
     
     let monsterMap = {}
     for(let monster in this.monsters) {
+      //this is the monster
       monster = this.monsters[monster]
+      //if this is true then do not render
+      if (monster.checkCurrentPositionForBullets(this.bullets)) {
+        this.increaseScore()
+        continue;
+      }
       if(!monster.processMovement(currentFrameTime)) {
         let direction = DIRECTIONS[monster.determineDirection(this.player.position)]
         while(!this.isValidMonsterMove(monster, direction, TILETYPES, FLOORTYPES)) {
         direction = DIRECTIONS[Monster.resolveCollision(direction)]
-      }
-        monster.move(direction, currentFrameTime)
+        }
+        if (monster.alive) {
+          if (monster.checkNextPositionForBullets(this.bullets, direction)) this.increaseScore()
+          monster.move(direction, currentFrameTime)
+          monster.bulletEnteredTile = false
+        }
         //for bullet
-        monster.bulletEnteredTile = false
-        //
       }
       this.renderMonster(monster);
-      monsterMap[this.toIndex(...monster.position)] = monster;
+      if (monster.alive) monsterMap[this.toIndex(...monster.position)] = monster;
     }
-    this.monsters = monsterMap
-    this.renderPlayer()
-    this.renderFPSCounter(framesLastSecond)
+    this.monsters = monsterMap;
+    this.renderPlayer();
+    this.renderFPSCounter(framesLastSecond);
+    this.renderScore();
     lastFrameTime = currentFrameTime;
-    requestAnimationFrame(this.drawGame)
+    requestAnimationFrame(this.drawGame);
    }
+  }
+
+  increaseScore() {
+    this.currentSpawns -= 1
+    this.score += 1
   }
 
   renderPlayer() {
@@ -194,6 +209,11 @@ class Game {
     window.ctx.fillStyle = "ff0000";
     window.ctx.fillText("FPS: " + framesLastSecond, 10, 20)
   }
+
+  renderScore() {
+    window.ctx.fillStyle = "ff0000";
+    window.ctx.fillText("Score: " + this.score, 10, 48)
+  }
   placeMonster(TILETYPES,FLOORTYPES) {
     const playerPosition = this.player.position
     const newMonsterPosition = () => [Math.floor(Math.random() * mapH - 1) + 1, Math.floor(Math.random() * mapW - 1) + 1]
@@ -214,20 +234,25 @@ class Game {
   
   moveAndRenderBullets(currentFrameTime) {
   let bullets = {}
+
   for(let bullet in this.bullets) {
     bullet = this.bullets[bullet]
+    //this may be double counting -> check monster collisions
+    if (bullet.detectCollision(this.monsters)) this.increaseScore()
     if(!bullet.processMovement(currentFrameTime)) {
       bullet.move(DIRECTIONS[bullet.facing], currentFrameTime)
       //console.log(this.player.position)
       //console.log("bullet", bullet.position)
     }
+
     bullets[bullet.currentPosition()] = bullet
+
     let spriteIndex = (bullet.movementAnimation) ? 0 : 1
     window.ctx.drawImage(window.fxSet, bullet.bulletSprites[bullet.facing][spriteIndex].x, bullet.bulletSprites[bullet.facing][spriteIndex].y, bullet.bulletSprites[bullet.facing][spriteIndex].w, bullet.bulletSprites[bullet.facing][spriteIndex].h, (this.viewport.offset[0] + bullet.position[0]), (this.viewport.offset[1]+ bullet.position[1]), bullet.dimensions[0], bullet.dimensions[1]);
 
    } 
    this.bullets = bullets
-}
+  }
 
 }
   

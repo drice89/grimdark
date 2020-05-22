@@ -9,7 +9,8 @@ body {
     -1px 1px 0 #000,
      1px 1px 0 #000;
   background-color: black;
-  background-image: "../assets/Gksh0R.jpg";
+  background-image: url("../assets/Gksh0R.jpg");
+  background-size: cover;
 }
 
 .container {
@@ -25,6 +26,7 @@ body {
 
 canvas {
   margin-top: -100;
+  border: 1px solid black;
 }
 
 .show {

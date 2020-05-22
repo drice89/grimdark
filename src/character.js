@@ -10,7 +10,7 @@ class Character {
     this.dimensions = [48, 48];
     this.position = [49,49]
     //movement speed
-    this.delayMove = 250;
+    this.delayMove = 210;
     this.facing = "DOWN"
     this.playerSprites = {
       "UP": [{x:96, y:0, w:47, h:47}, {x:96, y:48, w:47, h:47}],

@@ -79,7 +79,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   
-    
     requestAnimationFrame(newGame.drawGame);
   })
   
