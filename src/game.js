@@ -20,8 +20,8 @@ class Game {
       40: false, //down arrow
     }
     this.monsters = {}
-    this.spawnRate = 6
-    this.maxSpawns = 60
+    this.spawnRate = 2
+    this.maxSpawns = 500
     this.currentSpawns = 0
     this.score = 0
     this.drawGame = () => {
@@ -137,6 +137,10 @@ class Game {
     this.renderFPSCounter(framesLastSecond);
     this.renderScore();
     lastFrameTime = currentFrameTime;
+    if (this.player.lossCondition(this.monsters)) {
+      ctx.drawImage(window.gameOver, 340, 340, 473, 171, )
+      return;
+    }
     requestAnimationFrame(this.drawGame);
    }
   }

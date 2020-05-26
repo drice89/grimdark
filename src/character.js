@@ -10,7 +10,7 @@ class Character {
     this.dimensions = [48, 48];
     this.position = [49,49]
     //movement speed
-    this.delayMove = 210;
+    this.delayMove = 50;
     this.facing = "DOWN"
     this.playerSprites = {
       "UP": [{x:96, y:0, w:47, h:47}, {x:96, y:48, w:47, h:47}],
@@ -41,6 +41,10 @@ class Character {
     if (x < 0 || x > (mapW-1) || y < 0 || y > mapH-1) return false;
     if(TILETYPES[gameMap.map[this.toIndex(x,y)]].floor !== FLOORTYPES.open) return false;
     return true
+  }
+
+  lossCondition(monsters) {
+    return monsters[this.toIndex(...this.tileFrom)]
   }
 }
 //this function is dependent upon globals - maybe do tileW = this.tileW.bind(this)
@@ -99,6 +103,8 @@ Character.prototype.move = function(direction, time) {
   //console.log("tile to", this.tileTo[0], this.tileTo[1], direction)
 
 }
+
+
 
 
 export default Character

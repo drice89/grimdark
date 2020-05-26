@@ -10,6 +10,7 @@ window.tileset = new Image();
 window.monsterSet = new Image();
 window.fxSet = new Image();
 window.spaceImage = new Image();
+window.gameOver = new Image();
 
 window.ctx = null
 window.tilesetLoaded = false 
@@ -19,6 +20,7 @@ window.currentSecond = 0,
 window.frameCount = 0, 
 window.framesLastSecond = 0;
 window.lastFrameTime = 0;
+
 
 
 
@@ -52,6 +54,7 @@ window.onload = function() {
   window.monsterSet.src = ASSETURLS.characterTilesetUrl;
   window.fxSet.src = ASSETURLS.fxSetUrl;
   window.spaceImage.src = ASSETURLS.spaceImageUrl;
+  window.gameOver.src = ASSETURLS.gameOver;
 
 };
 

@@ -65,7 +65,7 @@ class Monster extends Character {
     }
 
     let newDirection = directions[randomDirection()]
-    debugger
+    
     while (newDirection === direction.FACING) {
       newDirection = directions[randomDirection()]
     }
