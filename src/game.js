@@ -138,12 +138,17 @@ class Game {
     this.renderScore();
     lastFrameTime = currentFrameTime;
     if (this.player.lossCondition(this.monsters)) {
-      ctx.drawImage(window.gameOver, 340, 340, 473, 171, )
+      ctx.drawImage(window.gameOver, 163.5, 340, 473, 171, )
       return;
     }
     requestAnimationFrame(this.drawGame);
    }
   }
+
+
+
+
+
 
   increaseScore() {
     this.currentSpawns -= 1
