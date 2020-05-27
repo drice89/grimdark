@@ -20,7 +20,7 @@ class Game {
       40: false, //down arrow
     }
     this.monsters = {}
-    this.spawnRate = 2
+    this.spawnRate = 6
     this.maxSpawns = 500
     this.currentSpawns = 0
     this.score = 0

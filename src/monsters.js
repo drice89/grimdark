@@ -14,7 +14,7 @@ class Monster extends Character {
     this.bulletEnteredTile = false;
     this.alive = true;
     //movement speed
-    this.delayMove = 400;
+    this.delayMove = 450;
     this.facing = "DOWN"
     this.monsterSprites = {
       "UP": [{x:96, y:576, w:47, h:47}, {x:96, y:624, w:47, h:47}],
