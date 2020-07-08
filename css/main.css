@@ -274,3 +274,8 @@ a {
     height: auto;
     transform: translate(50%, 38%);
 }
+
+#pregame, #game {
+  border: 4px solid rgba(212, 212, 212, 1);
+  border-radius: 4px;
+}
