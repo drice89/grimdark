@@ -30,5 +30,6 @@ export const ASSETURLS = {
   fxSetUrl: "./assets/tiny_galaxy_fx.png",
   spaceImageUrl: "./assets/space.png",
   hootsforce: "./assets/Gloryhammer-hootsforce.mp3",
-  gameOver: "./assets/gameover.png"
+  gameOver: "./assets/gameover.png",
+  spaceSet: "./assets/tiny_galaxy_space_3x.png"
 } 

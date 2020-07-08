@@ -45,17 +45,17 @@ canvas {
 }
 
 #start {
-      background-color: purple;
+    background-color: purple;
     position: absolute;
-    left: 290px;
-    bottom: 500px;
+    left: 253px;
+    bottom: 230px;
     width: 300px;
     height: 60px;
     border: 1px solid rgb(152, 5, 152);
-    border-radius: 5%;
+    border-radius: 15px;
     font-family: 'Creepster', cursive;
     color: rgba(94, 255, 152, 1);
-    font-size: 20px;
+    font-size: 28px;
     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 
 }
@@ -68,19 +68,15 @@ img{
 #start:hover {
     background-color: rgba(94, 255, 152, 1);
     position: absolute;
-    left: 290px;
-    bottom: 500px;
-    width: 300px;
-    height: 60px;
+    left: 253px;
+    bottom: 230px;
     border: 1px solid rgba(94, 255, 152, 1);
-    border-radius: 5%;
     font-family: 'Creepster', cursive;
     color:  rgb(152, 5, 152);
-    font-size: 20px;
     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 
-.logo {
+.header {
   height: 100px;
   width: auto;
 }
@@ -268,4 +264,13 @@ a:link {
 a {
   color: #D4D4D4;
   text-decoration: none;
+}
+
+.logo {
+    position: absolute;
+    left: 15px;
+    top: 16px;
+    width: 400px;
+    height: auto;
+    transform: translate(50%, 38%);
 }

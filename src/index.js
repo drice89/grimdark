@@ -1,4 +1,5 @@
 import Game from "./game"
+import Pregame from "./pregame"
 import { ASSETURLS } from "./util"
 
 window.tileW = 48
@@ -11,6 +12,7 @@ window.monsterSet = new Image();
 window.fxSet = new Image();
 window.spaceImage = new Image();
 window.gameOver = new Image();
+window.spaceSet = new Image();
 
 window.ctx = null
 window.tilesetLoaded = false 
@@ -55,10 +57,15 @@ window.onload = function() {
   window.fxSet.src = ASSETURLS.fxSetUrl;
   window.spaceImage.src = ASSETURLS.spaceImageUrl;
   window.gameOver.src = ASSETURLS.gameOver;
+  window.spaceSet.src = ASSETURLS.spaceSet
   
 };
 
 document.addEventListener("DOMContentLoaded", () => { 
+  const pregameElement = document.getElementById("pregame")
+  window.ctx = pregameElement.getContext('2d');
+  const pregame = new Pregame()
+  requestAnimationFrame(pregame.drawPregame)
   const start = document.getElementById("start")
   start.addEventListener( "click", () =>{
     document.querySelectorAll(".welcome")[0].setAttribute("class", "hidden")
@@ -101,7 +108,8 @@ document.addEventListener("DOMContentLoaded", () => {
         newGame.keysDown[e.keyCode] = false;
       }
     });
-  
+    
+    pregame.gameStart = true;
     requestAnimationFrame(newGame.drawGame);
   })
   

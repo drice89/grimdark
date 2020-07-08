@@ -14,7 +14,7 @@
 </head>
 <body>
   <div class="container">
-    <div><img class="logo" src="./assets/Grimdark.png"></div>
+    <div class="header"></div>
     <div class="main-section">
       <aside>
         <div>
@@ -49,7 +49,12 @@
           </div>
         </div>
       </aside>
-      <div class="welcome"><img src="./assets/game.png" alt="" /><button id="start">PLAY!</button></div>
+      <!-- <div class="welcome"><img src="./assets/game.png" alt="" /></div> -->
+      <div class="welcome">
+        <img class="header logo" src="./assets/Grimdark.png">
+        <canvas id="pregame" width="800" height="800"></canvas>
+        <button id="start">PLAY!</button>
+      </div>
       <canvas id="game" class="hidden" width="800" height="800"></canvas>
       <aside>
         <div>
