@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GRIMDARK</title>
   <link rel="stylesheet"  type="text/css" href="./css/main.css" />
+  <link rel="stylesheet"  type="text/css" href="./css/reset.css" />
   <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/360fc3603e.js" crossorigin="anonymous"></script>
   <script src="./dist/main.js">
     
   </script>
@@ -13,8 +15,54 @@
 <body>
   <div class="container">
     <div><img class="logo" src="./assets/Grimdark.png"></div>
-    <div class="welcome"><img src="./assets/game.png" alt="" /><button id="start">PLAY!</button></div>
-    <canvas id="game" class="hidden" width="800" height="800"></canvas>
+    <div class="main-section">
+      <aside>
+        <div>
+          <h3>Game Controls</h3>
+          <ul class="controls">
+            <li>
+              <h4>Movement :</h4>
+              <div class="arrow-keys">
+                <div>
+                  <span> Arrow Keys</span>
+                  <div class="up-arrow"><i class="fas fa-caret-square-up fa-lg"></i></div>
+                  <div><i class="fas fa-caret-square-left fa-lg"></i><i class="fas fa-caret-square-down fa-lg"></i><i class="fas fa-caret-square-right fa-lg"></i></div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <h4>Use Weapon :</h4>
+              <div class="spacebar">Spacebar</div>
+            </li>
+          </ul>
+          <div class="divider"></div>
+          <div class="sound-controls">
+            <h3>
+              Sound Controls
+            </h3>
+            <div>
+              volume <input id="volume" type="range" min="0" max="100" value="25"></input>
+            </div>
+            <div>
+              <i id="play" class="fas fa-play-circle"></i><i class="fas fa-pause-circle" id="pause"></i>
+            </div>
+          </div>
+        </div>
+      </aside>
+      <div class="welcome"><img src="./assets/game.png" alt="" /><button id="start">PLAY!</button></div>
+      <canvas id="game" class="hidden" width="800" height="800"></canvas>
+      <aside>
+        <div>
+          <h3>About the creator</h3>
+          <ul class="about">
+            <li><a href="https://drice89.github.io/portfolio/index.html">Website</a></li>
+            <li><a href="https://www.linkedin.com/in/dillon-rice-48339a47/">LinkedIn</a></li>
+            <li><a href="https://github.com/drice89/grimdark">Github</a></li>
+          </ul>
+        </div>
+        
+      </aside>
+    </div>
   </div>
   
 </body>

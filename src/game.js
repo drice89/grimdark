@@ -59,7 +59,7 @@ class Game {
     this.renderMap()
     this.moveAndRenderBullets(currentFrameTime)
     //// generate monster
-    if (!(sec%6) && this.currentSpawns < this.maxSpawns) this.placeMonster(TILETYPES,FLOORTYPES)
+    if (!(sec%this.spawnRate) && this.currentSpawns < this.maxSpawns) this.placeMonster(TILETYPES,FLOORTYPES)
   
     //Player movement//////////////////////////////////////////////////////
     if (!this.player.processMovement(currentFrameTime)) {
@@ -117,7 +117,6 @@ class Game {
 
       if(!monster.processMovement(currentFrameTime)) {
         let direction = DIRECTIONS[monster.determineDirection(this.player.position)]
-        console.log(direction)
         let i = 2
         while(!monster.isValidMonsterMove(this.gameMap, direction, this.monsters, monsterMap) && i > 0) {
           //make 4 attempts to change direction
@@ -139,15 +138,12 @@ class Game {
     lastFrameTime = currentFrameTime;
     if (this.player.lossCondition(this.monsters)) {
       ctx.drawImage(window.gameOver, 163.5, 340, 473, 171, )
+      music.pause()
       return;
     }
     requestAnimationFrame(this.drawGame);
    }
   }
-
-
-
-
 
 
   increaseScore() {

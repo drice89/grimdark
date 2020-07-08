@@ -4,8 +4,8 @@
   "description": "rouge-like sci-fi game",
   "main": "index.js",
   "dependencies": {
-    "webpack-cli": "^3.3.11",
-    "webpack": "^4.43.0"
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
   },
   "devDependencies": {},
   "scripts": {

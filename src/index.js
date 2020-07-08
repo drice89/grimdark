@@ -20,7 +20,7 @@ window.currentSecond = 0,
 window.frameCount = 0, 
 window.framesLastSecond = 0;
 window.lastFrameTime = 0;
-
+window.music = new Audio(ASSETURLS.hootsforce)
 
 
 
@@ -55,7 +55,7 @@ window.onload = function() {
   window.fxSet.src = ASSETURLS.fxSetUrl;
   window.spaceImage.src = ASSETURLS.spaceImageUrl;
   window.gameOver.src = ASSETURLS.gameOver;
-
+  
 };
 
 document.addEventListener("DOMContentLoaded", () => { 
@@ -63,8 +63,28 @@ document.addEventListener("DOMContentLoaded", () => {
   start.addEventListener( "click", () =>{
     document.querySelectorAll(".welcome")[0].setAttribute("class", "hidden")
     document.getElementById("game").setAttribute("class", "show")
-    const music = new Audio(ASSETURLS.hootsforce)
+    const play = document.getElementById("play")
+    const pause = document.getElementById("pause")
+    const volume = document.getElementById("volume")
+    
+    music.volume = .25
     music.play();
+
+    play.addEventListener("click", () =>{
+      if (music.paused) {
+        music.play()
+      }
+    })
+
+    pause.addEventListener("click", () => {
+      if (!music.paused) {
+        music.pause()
+      }
+    })
+
+    volume.addEventListener("change", () => {
+      music.volume = (volume.value * .01)
+    })
   
     const game = document.getElementById("game")
     window.ctx = game.getContext('2d');

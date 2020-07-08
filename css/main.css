@@ -1,16 +1,19 @@
 body {
   overflow: hidden;
-  font-family: 'Creepster', cursive;
-  color: rgb(152, 5, 152);
-  font-size: 20px;
-  text-shadow:
-   -1px -1px 0 #000,  
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-     1px 1px 0 #000;
   background-color: black;
   background-image: url("../assets/Gksh0R.jpg");
   background-size: cover;
+  font-size: 20px;
+}
+
+body, ul, li, div, span, h3, h4 {
+  font-family: 'Creepster', cursive;
+  color: rgb(152, 5, 152);
+  text-shadow:
+    -1px -1px 0 #000,  
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
 }
 
 .container {
@@ -84,4 +87,185 @@ img{
 
 .hidden {
   display:none
+}
+
+.main-section {
+  display: flex;
+  justify-content: space-around;
+  margin: 8px 0;
+}
+
+.main-section aside {
+  display: flex;
+  flex-direction: column;
+  border: 4px solid #D4D4D4;
+  border-radius: 4px;
+  width: 300px;
+  height: fit-content;
+  padding: 8px;
+  margin: 0 24px;
+  background-color: #2F484E;
+  font-family: 'Creepster', cursive;
+  color: rgb(152, 5, 152);
+  text-shadow:
+   -1px -1px 0 #000,  
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+     1px 1px 0 #000;
+}
+
+aside h3 {
+  text-align: center;
+  font-size: 32px;
+  
+}
+
+aside h4 {
+  font-size: 24px;
+  width: 50%;
+  text-align: right;
+  padding: 16px;
+}
+
+aside {
+  margin: none;
+}
+
+aside > div {
+  width: 100%;
+}
+
+aside li, div, span {
+  color: #D4D4D4;
+  text-shadow:
+   -2px -2px 0 #000,  
+    2px -2px 0 #000,
+    -2px 2px 0 #000,
+     2px 2px 0 #000;
+}
+
+ul.controls {
+  list-style: none;
+  padding: 4px;
+  width: 100%;
+ 
+}
+
+.controls li {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.controls li > div {
+  width: 50%;
+  padding: 16px;
+  font-size: 24px;
+  text-align: center;
+}
+
+.arrow-keys {
+  display: flex;
+  justify-content: center;
+}
+
+
+.arrow-keys > div {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.arrow-keys span {
+  margin-bottom: 8px;
+}
+
+.arrow-keys i {
+  padding: 4px;
+  font-size: 20px;
+}
+
+.about {
+  padding: 16px;
+}
+
+.about li {
+  font-size: 24px;
+  padding: 8px 20px;
+}
+
+.divider {
+  width: 43%;
+  border-top: 2px solid #D4D4D4;
+  margin: 16px auto;
+  padding-bottom: 4px;
+}
+
+#volume {
+  -webkit-appearance: none;
+  width: 66%;
+  height: 15px;
+  border-radius: 5px;  
+  background: #d4d4d4;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  margin-left: 4px;
+}
+
+#volume::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%; 
+  background: #5EFF98;
+  cursor: pointer;
+}
+
+#volume::-moz-range-thumb {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #5EFF98;
+  cursor: pointer;
+}
+
+.sound-controls {
+  font-size: 24px;
+}
+
+.sound-controls div {
+  padding: 8px 4px;
+  text-align: center;
+}
+
+.sound-controls h3 {
+  margin-bottom: 8px;
+}
+
+.sound-controls i {
+  font-size: 32px;
+  padding: 8px
+}
+
+.sound-controls i:hover {
+  font-size: 32px;
+  color: #5EFF98;
+}
+
+a:hover {
+  color: #5EFF98;
+}
+
+a:link {
+  text-decoration: none;
+}
+
+a {
+  color: #D4D4D4;
+  text-decoration: none;
 }
