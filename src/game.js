@@ -116,7 +116,14 @@ class Game {
       if (!monster.alive) continue;
 
       if(!monster.processMovement(currentFrameTime)) {
+        
         let direction = DIRECTIONS[monster.determineDirection(this.player.position)]
+        //Loss condition here - if direction is blank then we know the monster is at the same position as the player
+        if (!direction) {
+          ctx.drawImage(window.gameOver, 163.5, 340, 473, 171, )
+          music.pause()
+          return;
+        }
         let i = 2
         while(!monster.isValidMonsterMove(this.gameMap, direction, this.monsters, monsterMap) && i > 0) {
           //make 4 attempts to change direction
@@ -136,11 +143,6 @@ class Game {
     this.renderFPSCounter(framesLastSecond);
     this.renderScore();
     lastFrameTime = currentFrameTime;
-    if (this.player.lossCondition(this.monsters)) {
-      ctx.drawImage(window.gameOver, 163.5, 340, 473, 171, )
-      music.pause()
-      return;
-    }
     requestAnimationFrame(this.drawGame);
    }
   }

@@ -43,9 +43,12 @@ class Character {
     return true
   }
 
-  lossCondition(monsters) {
-    return monsters[this.toIndex(...this.tileFrom)]
-  }
+  // lossCondition(monsters) {
+  //   const monsterInTile = monsters[this.toIndex(...this.tileTo)] || monsters[this.toIndex(...this.tileFrom)]
+  //   if (monsterInTile) {
+  //     return (monsterInTile.position === this.position)
+  //   }
+  // }
 }
 //this function is dependent upon globals - maybe do tileW = this.tileW.bind(this)
 Character.prototype.placeAt = function(x,y) {
