@@ -140,8 +140,7 @@ class Game {
     }
     this.monsters = monsterMap;
     this.renderPlayer();
-    this.renderFPSCounter(framesLastSecond);
-    this.renderScore();
+    this.renderHud(framesLastSecond);
     lastFrameTime = currentFrameTime;
     requestAnimationFrame(this.drawGame);
    }
@@ -190,8 +189,8 @@ class Game {
   // }
   
 
-   renderMap() {
-     for(let y = this.viewport.startTile[1]; y <= this.viewport.endTile[1]; y++) {
+  renderMap() {
+    for(let y = this.viewport.startTile[1]; y <= this.viewport.endTile[1]; y++) {
       for(let x = this.viewport.startTile[0]; x <= this.viewport.endTile[0]; x++) {
         const index = this.toIndex(x,y)
         const tile = TILETYPES[this.gameMap.map[this.toIndex(x,y)]];
@@ -206,15 +205,19 @@ class Game {
     }
   }
 
-  renderFPSCounter(framesLastSecond) {
-    window.ctx.fillStyle = "ff0000";
-    window.ctx.fillText("FPS: " + framesLastSecond, 10, 20)
+  renderHud(framesLastSecond) {
+    window.ctx.drawImage(window.interface, 574, 285, 145, 60, 10, 10, 130, 70);
+    window.ctx.fillStyle = "#980598";
+    window.ctx.fillText("FPS: " + framesLastSecond, 45, 35)
+    window.ctx.fillText("SCORE: " + this.score, 45, 60)
+    //This is controling the shadow around the sprites as well
+    window.ctx.shadowOffestX = 1
+    window.ctx.shadowOffestY = 1
+    window.ctx.shadowColor = "#980598";
+    window.ctx.shadowBlur = 1;
+
   }
 
-  renderScore() {
-    window.ctx.fillStyle = "ff0000";
-    window.ctx.fillText("Score: " + this.score, 10, 48)
-  }
   placeMonster(TILETYPES,FLOORTYPES) {
     const playerPosition = this.player.position
     const newMonsterPosition = () => [Math.floor(Math.random() * mapH - 1) + 1, Math.floor(Math.random() * mapW - 1) + 1]

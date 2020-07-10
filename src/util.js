@@ -31,5 +31,6 @@ export const ASSETURLS = {
   spaceImageUrl: "./assets/space.png",
   hootsforce: "./assets/Gloryhammer-hootsforce.mp3",
   gameOver: "./assets/gameover.png",
-  spaceSet: "./assets/tiny_galaxy_space_3x.png"
+  spaceSet: "./assets/tiny_galaxy_space_3x.png",
+  interfaceUrl: "./assets/tiny_galaxy_interface_3x.png"
 } 
