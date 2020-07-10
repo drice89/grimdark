@@ -7,7 +7,9 @@ import Monster from "./monsters"
 import Bullet from "./bullets"
 
 class Game {
-  constructor(viewportDimensions) {
+  constructor(viewportDimensions, level) {
+    this.gameStatus = "active"
+    this.level = level
     this.gameMap = new Map(levelOne)
     this.player = new Character()
     this.viewport = new Viewport(viewportDimensions)
@@ -25,7 +27,6 @@ class Game {
     this.currentSpawns = 0
     this.score = 0
     this.key = null
-    this.level = 1
     this.drawGame = () => {
 
     if(ctx === null) return;
@@ -130,9 +131,12 @@ class Game {
         let direction = DIRECTIONS[monster.determineDirection(this.player.position)]
         //Loss condition here - if direction is blank then we know the monster is at the same position as the player
         if (!direction) {
-          ctx.drawImage(window.gameOver, 163.5, 340, 473, 171, )
+          window.ctx.font = "bold 70pt 'Creepster'";
+          ctx.fillText("GAME OVER", 215, 370, 473, 171)
+          //ctx.drawImage(window.gameOver, 163.5, 340, 473, 171)
           music.pause()
-          return;
+          this.gameStatus = "loss"
+          return this.gameStatus;
         }
         let i = 2
         while(!monster.isValidMonsterMove(this.gameMap, direction, this.monsters, monsterMap) && i > 0) {
@@ -149,14 +153,23 @@ class Game {
       if (monster.alive) monsterMap[this.toIndex(...monster.tileTo)] = monster;
     }
     this.monsters = monsterMap;
+    //render and pick up key //
     if (this.key) this.renderKey();
     if (this.key && (this.toIndex(this.player.tileFrom[0], this.player.tileFrom[1]) === Math.floor(this.toIndex(this.key[0], this.key[1])))) {
       this.player.keyCard = true;
       this.key = null
     }
+    //////////////////////////
     this.renderPlayer();
     this.renderHud(framesLastSecond);
     lastFrameTime = currentFrameTime;
+    //check for win condition
+    if (this.player.keyCard && Map.levelComplete(this.toIndex(this.player.tileTo[0], this.player.tileTo[1]), this.gameMap.map)) {
+      this.gameStatus = "win"
+      window.ctx.font = "bold 60pt 'Creepster'";
+      window.ctx.fillText("LEVEL COMPLETED!", 170, 340, 473, 171)
+      return this.gameStatus;
+    }
     requestAnimationFrame(this.drawGame);
    }
   }
@@ -222,10 +235,11 @@ class Game {
   }
 
   renderHud(framesLastSecond) {
-    window.ctx.drawImage(window.interface, 574, 285, 145, 60, 10, 10, 130, 70);
+    window.ctx.drawImage(window.interface, 574, 285, 145, 60, 10, 10, 130, 100);
     window.ctx.fillStyle = "#980598";
-    window.ctx.fillText("FPS: " + framesLastSecond, 45, 35)
-    window.ctx.fillText("SCORE: " + this.score, 45, 60)
+    window.ctx.fillText("FPS: " + framesLastSecond, 45, 35);
+    window.ctx.fillText("SCORE: " + this.score, 45, 60);
+    window.ctx.fillText(`LEVEL: ${this.level}`, 45, 85);
     //This is controling the shadow around the sprites as well
     window.ctx.shadowOffestX = 1
     window.ctx.shadowOffestY = 1
@@ -246,7 +260,7 @@ class Game {
     while (!validateMonsterPlacement(monsterPosition)) {
       monsterPosition = newMonsterPosition()
     }
-    const monster = new Monster()
+    const monster = new Monster(this.level)
     monster.placeAt(...monsterPosition)
     this.monsters[this.toIndex(...monsterPosition)] = monster
     this.currentSpawns += 1

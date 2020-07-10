@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
     const game = document.getElementById("game")
     window.ctx = game.getContext('2d');
-    const newGame = new Game([game.width, game.height])
+    const newGame = new Game([game.width, game.height], 1)
     window.ctx.font = "bold 16pt 'Creepster'";
     
     window.addEventListener("keydown", (e) => {

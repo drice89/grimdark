@@ -48,6 +48,10 @@ class Map {
       return lastMulti;
       })
   }
+
+  static levelComplete(playerCurrentMapIndex, gameMap) {
+    return gameMap[playerCurrentMapIndex] === 101
+  }
 }
 
 export default Map;

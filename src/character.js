@@ -12,7 +12,7 @@ class Character {
     //movement speed
     this.delayMove = 300;
     this.facing = "DOWN"
-    this.keyCard = null
+    this.keyCard = false
     this.playerSprites = {
       "UP": [{x:96, y:0, w:47, h:47}, {x:96, y:48, w:47, h:47}],
       "DOWN": [{x:48, y:0, w:47, h:47}, {x:48, y:48, w:47, h:47}],
