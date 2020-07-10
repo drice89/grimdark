@@ -4,7 +4,7 @@ class Map {
   }
 
   ramdomizer(num, i){
-    if(num >= 1) {
+    if(num >= 1 && num !== 100 && num !== 101) {
       const tile = Math.floor(Math.random() * 100000)
       
       const keycard = 99852;
@@ -14,7 +14,6 @@ class Map {
       
       //order matters
       if(tile >= keycard) {
-        console.log(tile)
         return 2
       }
 
@@ -23,7 +22,7 @@ class Map {
       if(tile >= rearWallDecoration && (((i - (i%mapW))/mapW)%16) === 1) return 5
       return 1
     } else {
-      return 0;
+      return num;
     }
   }
 

@@ -150,10 +150,8 @@ class Game {
     }
     this.monsters = monsterMap;
     if (this.key) this.renderKey();
-    if (this.key) { console.log(this.toIndex(this.key[0], this.key[1]))}
     if (this.key && (this.toIndex(this.player.tileFrom[0], this.player.tileFrom[1]) === Math.floor(this.toIndex(this.key[0], this.key[1])))) {
       this.player.keyCard = true;
-      console.log(this.player.keyCard)
       this.key = null
     }
     this.renderPlayer();
@@ -210,13 +208,14 @@ class Game {
     for(let y = this.viewport.startTile[1]; y <= this.viewport.endTile[1]; y++) {
       for(let x = this.viewport.startTile[0]; x <= this.viewport.endTile[0]; x++) {
         const index = this.toIndex(x,y)
-        const tile = TILETYPES[this.gameMap.map[this.toIndex(x,y)]];
-        let spriteIndex = tile.name === "wall" && this.gameMap.map[index + 64] ? 1 : 0
+        if (this.gameMap.map[index] === 100 && this.player.keyCard) this.gameMap.map[index] = 101
+        const tile = TILETYPES[this.gameMap.map[index]];
+        const spriteIndex = tile.name === "wall" && this.gameMap.map[index + 64] ? 1 : 0
         try {
           window.ctx.drawImage(window.tileset, tile.sprite[spriteIndex].x, tile.sprite[spriteIndex].y, tile.sprite[spriteIndex].w, tile.sprite[spriteIndex].h, 
             (this.viewport.offset[0] + (x * tileW)), (this.viewport.offset[1] + (y*tileH)), tileW, tileH);
           } catch(err) {
-            console.log(this.gameMap.map[index + 64])
+            console.log(err + " at map index " + this.gameMap.map[index + 64])
           }
       }
     }
