@@ -24,6 +24,8 @@ class Game {
     this.maxSpawns = 500
     this.currentSpawns = 0
     this.score = 0
+    this.key = null
+    this.level = 1
     this.drawGame = () => {
 
     if(ctx === null) return;
@@ -113,7 +115,15 @@ class Game {
       monster = this.monsters[monster]
 
       //if this is true then do not render
-      if (!monster.alive) continue;
+      if (!monster.alive) {
+        if (!this.key && !this.player.keyCard) {
+          const randomlyDropKeyAtDeathPosition = monster.dropKey()
+          if (randomlyDropKeyAtDeathPosition) {
+            this.key = randomlyDropKeyAtDeathPosition
+          }
+        }
+        continue;
+      }
 
       if(!monster.processMovement(currentFrameTime)) {
         
@@ -139,6 +149,13 @@ class Game {
       if (monster.alive) monsterMap[this.toIndex(...monster.tileTo)] = monster;
     }
     this.monsters = monsterMap;
+    if (this.key) this.renderKey();
+    if (this.key) { console.log(this.toIndex(this.key[0], this.key[1]))}
+    if (this.key && (this.toIndex(this.player.tileFrom[0], this.player.tileFrom[1]) === Math.floor(this.toIndex(this.key[0], this.key[1])))) {
+      this.player.keyCard = true;
+      console.log(this.player.keyCard)
+      this.key = null
+    }
     this.renderPlayer();
     this.renderHud(framesLastSecond);
     lastFrameTime = currentFrameTime;
@@ -247,8 +264,6 @@ class Game {
       if(bullet.isValidMove(this.gameMap)) {
         if(!bullet.processMovement(currentFrameTime)) {
           bullet.move(DIRECTIONS[bullet.facing], currentFrameTime)
-          //console.log(this.player.position)
-          //console.log("bullet", bullet.position)
         }
         bullets.push(bullet)
     }
@@ -260,6 +275,12 @@ class Game {
      }
     } 
    this.bullets = bullets
+  }
+
+  renderKey() {
+    const [x, y] = this.key
+    const pos = [x * tileW, y * tileH]
+    window.ctx.drawImage(window.items, 390, 0, 48, 48, (this.viewport.offset[0] + pos[0]), (this.viewport.offset[1] + pos[1]), 48, 48)
   }
 
 }

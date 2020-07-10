@@ -49,6 +49,15 @@ class Monster extends Character {
     return true
   }
 
+  dropKey() {
+    const int = Math.random()
+    if (int > .985) {
+      return this.tileFrom
+    } else {
+      return null
+    }
+  }
+
   static resolveCollision(direction) {
     let randomDirection = () => {
       return Math.floor(Math.random() * 8) + 1

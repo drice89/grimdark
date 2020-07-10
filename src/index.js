@@ -14,11 +14,13 @@ window.spaceImage = new Image();
 window.gameOver = new Image();
 window.spaceSet = new Image();
 window.interface = new Image();
+window.items = new Image();
 
 window.ctx = null
 window.tilesetLoaded = false 
 window.monsterSetLoaded = false; 
 window.fxSetLoaded = false;
+window.itemsLoaded = false;
 window.currentSecond = 0, 
 window.frameCount = 0, 
 window.framesLastSecond = 0;
@@ -39,10 +41,12 @@ window.onload = function() {
   window.fxSet.onerror = notifyError
   window.spaceImage.onerror = notifyError
   window.interface.onerror = notifyError
+  window.interface.onerror = notifyError
   
   window.tileset.onload = function() { window.tilesetLoaded = true };
   window.monsterSet.onload = function() { window.monsterSetLoaded = true }
   window.fxSet.onload = function() { window.fxSetLoaded = true }
+  window.items.onload = function() { window.itemsLoaded = true }
   //revisit 
   window.tileset.src = ASSETURLS.tilesetUrl;
   window.monsterSet.src = ASSETURLS.characterTilesetUrl;
@@ -51,6 +55,7 @@ window.onload = function() {
   window.gameOver.src = ASSETURLS.gameOver;
   window.spaceSet.src = ASSETURLS.spaceSet
   window.interface.src = ASSETURLS.interfaceUrl
+  window.items.src = ASSETURLS.itemsUrl
   
 };
 

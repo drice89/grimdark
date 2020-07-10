@@ -2,16 +2,17 @@ import { DIRECTIONS, FLOORTYPES, TILETYPES } from "./util"
 ////Character
 class Character {
   constructor() {
-    this.tileFrom = [1,1];
-    this.tileTo = [1,1];
+    this.tileFrom = [62,62];
+    this.tileTo = [62,62];
     //also affects movement speed 
     this.timeMoved = 0;
     //this is the dimension of the character sprite
     this.dimensions = [48, 48];
-    this.position = [49,49]
+    this.position = [2976,2976]
     //movement speed
     this.delayMove = 300;
     this.facing = "DOWN"
+    this.keyCard = null
     this.playerSprites = {
       "UP": [{x:96, y:0, w:47, h:47}, {x:96, y:48, w:47, h:47}],
       "DOWN": [{x:48, y:0, w:47, h:47}, {x:48, y:48, w:47, h:47}],
