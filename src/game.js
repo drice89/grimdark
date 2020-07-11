@@ -1,16 +1,17 @@
 import Viewport from "./view";
 import Character from "./character";
 import Map from "./map";
-import { levelOne } from "./levels"
+import * as levels from "./levels"
 import { FLOORTYPES, TILETYPES, DIRECTIONS } from "./util"
 import Monster from "./monsters"
 import Bullet from "./bullets"
+import DeadMonster from "./deadMonsters"
 
 class Game {
   constructor(viewportDimensions, level) {
     this.gameStatus = "active"
     this.level = level
-    this.gameMap = new Map(levelOne)
+    this.gameMap = new Map(levels[`level${level}`])
     this.player = new Character()
     this.viewport = new Viewport(viewportDimensions)
     this.bullets = []
@@ -22,6 +23,7 @@ class Game {
       40: false, //down arrow
     }
     this.monsters = {}
+    this.deadMonsters = []
     this.spawnRate = 6
     this.maxSpawns = 500
     this.currentSpawns = 0
@@ -115,14 +117,19 @@ class Game {
     for(let monster in this.monsters) {
       monster = this.monsters[monster]
 
-      //if this is true then do not render
+      //if monster is dead then do not render
       if (!monster.alive) {
+        //see if key drops
         if (!this.key && !this.player.keyCard) {
           const randomlyDropKeyAtDeathPosition = monster.dropKey()
           if (randomlyDropKeyAtDeathPosition) {
             this.key = randomlyDropKeyAtDeathPosition
           }
         }
+        
+      //add to dead monsters list to process death animation
+        this.deadMonsters.push(new DeadMonster(monster.position, currentFrameTime))
+
         continue;
       }
 
@@ -131,12 +138,12 @@ class Game {
         let direction = DIRECTIONS[monster.determineDirection(this.player.position)]
         //Loss condition here - if direction is blank then we know the monster is at the same position as the player
         if (!direction) {
+          this.renderMonster(monster)
+          this.gameStatus = "loss"
           window.ctx.font = "bold 70pt 'Creepster'";
           ctx.fillText("GAME OVER", 215, 370, 473, 171)
-          //ctx.drawImage(window.gameOver, 163.5, 340, 473, 171)
           music.pause()
-          this.gameStatus = "loss"
-          return this.gameStatus;
+          return;
         }
         let i = 2
         while(!monster.isValidMonsterMove(this.gameMap, direction, this.monsters, monsterMap) && i > 0) {
@@ -160,12 +167,13 @@ class Game {
       this.key = null
     }
     //////////////////////////
+    this.renderDeadMonsterAnimations(currentFrameTime)
     this.renderPlayer();
     this.renderHud(framesLastSecond);
     lastFrameTime = currentFrameTime;
     //check for win condition
     if (this.player.keyCard && Map.levelComplete(this.toIndex(this.player.tileTo[0], this.player.tileTo[1]), this.gameMap.map)) {
-      this.gameStatus = "win"
+      this.gameStatus = this.level === 5 ? "endgame" :"win"
       window.ctx.font = "bold 60pt 'Creepster'";
       window.ctx.fillText("LEVEL COMPLETED!", 170, 340, 473, 171)
       return this.gameStatus;
@@ -252,7 +260,7 @@ class Game {
     const playerPosition = this.player.position
     const newMonsterPosition = () => [Math.floor(Math.random() * mapH - 1) + 1, Math.floor(Math.random() * mapW - 1) + 1]
     const validateMonsterPlacement = (position) => {
-      if (Math.abs(position[0] - playerPosition[0]) <= 3 || Math.abs(position[1] - playerPosition[1]) <= 3) return false
+      if (Math.abs(position[0] - playerPosition[0]) <= 5 || Math.abs(position[1] - playerPosition[1]) <= 5) return false
       if(TILETYPES[this.gameMap.map[this.toIndex(...position)]].floor !== FLOORTYPES.open) return false
       return true
     }
@@ -296,7 +304,18 @@ class Game {
     window.ctx.drawImage(window.items, 390, 0, 48, 48, (this.viewport.offset[0] + pos[0]), (this.viewport.offset[1] + pos[1]), 48, 48)
   }
 
+  renderDeadMonsterAnimations(sec) {
+    let deadMonsters = []
+    this.deadMonsters.forEach(deadMonster => {
+      window.ctx.drawImage(window.fxSet, deadMonster.sprite[0].x, deadMonster.sprite[0].y, deadMonster.sprite[0].w, deadMonster.sprite[0].h, (this.viewport.offset[0] + deadMonster.position[0]), (this.viewport.offset[1] + deadMonster.position[1]), 48, 48)
+      deadMonster.changeAnimation(sec)
+      if (!deadMonster.expired) deadMonsters.push(deadMonster)
+    })
+    this.deadMonsters = deadMonsters
+  }
 }
+
+
   
 
 export default Game;
