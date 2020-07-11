@@ -233,7 +233,6 @@ class Game {
         const tile = TILETYPES[this.gameMap.map[index]];
         const spriteIndex = tile.name === "wall" && this.gameMap.map[index + 64] ? 1 : 0
         try {
-          if (tile.name !== "tile" && tile.name !== "wall" && tile.name !== "computer" && tile.name !== "keycard" && tile.name !== "table") console.log(tile)
           window.ctx.drawImage(window.tileset, tile.sprite[spriteIndex].x, tile.sprite[spriteIndex].y, tile.sprite[spriteIndex].w, tile.sprite[spriteIndex].h, 
             (this.viewport.offset[0] + (x * tileW)), (this.viewport.offset[1] + (y*tileH)), tileW, tileH);
           } catch(err) {
