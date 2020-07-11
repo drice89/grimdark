@@ -36,15 +36,18 @@ canvas {
   display: block;
 }
 
-.welcome{
+.game-container {
   position: relative;
 }
+/* .welcome{
+  position: relative;
+} */
 
 #game {
   margin-top: -20;
 }
 
-#start {
+.action-button {
     background-color: purple;
     position: absolute;
     left: 253px;
@@ -57,7 +60,6 @@ canvas {
     color: rgba(94, 255, 152, 1);
     font-size: 28px;
     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-
 }
 
 img{
@@ -65,7 +67,7 @@ img{
   height: 900px;
 }
 
-#start:hover {
+.action-button:hover {
     background-color: rgba(94, 255, 152, 1);
     position: absolute;
     left: 253px;

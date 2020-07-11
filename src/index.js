@@ -25,6 +25,8 @@ window.currentSecond = 0,
 window.frameCount = 0, 
 window.framesLastSecond = 0;
 window.lastFrameTime = 0;
+window.level = 1
+window.gameStatus = "active"
 window.music = new Audio(ASSETURLS.hootsforce)
 
 
@@ -65,8 +67,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const pregame = new Pregame()
   requestAnimationFrame(pregame.drawPregame)
   const start = document.getElementById("start")
+
   start.addEventListener( "click", () =>{
-    document.querySelectorAll(".welcome")[0].setAttribute("class", "hidden")
+    document.getElementById("welcome").setAttribute("class", "hidden")
+    start.setAttribute("class", "hidden")
     document.getElementById("game").setAttribute("class", "show")
     const play = document.getElementById("play")
     const pause = document.getElementById("pause")
@@ -90,10 +94,10 @@ document.addEventListener("DOMContentLoaded", () => {
     volume.addEventListener("change", () => {
       music.volume = (volume.value * .01)
     })
-  
+
     const game = document.getElementById("game")
     window.ctx = game.getContext('2d');
-    const newGame = new Game([game.width, game.height], 1)
+    let newGame = new Game([game.width, game.height], window.level)
     window.ctx.font = "bold 16pt 'Creepster'";
     
     window.addEventListener("keydown", (e) => {
@@ -108,46 +112,39 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     
     pregame.gameStart = true;
-    requestAnimationFrame(newGame.drawGame);
+    function handleGameResults(res) {
+      switch (res) {
+        case "win":
+          window.level++
+          start.innerText = "Next Level"
+          start.setAttribute("class", "action-button")
+          break;
+        case "loss": 
+          window.level = 1
+          start.innerText = "Replay"
+          start.setAttribute("class", "action-button")
+          break;
+        case "endgame":
+          window.level = 1
+          start.innerText = "You Won! Thanks for Playing! Click to play again!"
+          start.setAttribute("class", "action-button")
+          break;
+      }
+    }
+
+    requestAnimationFrame(newGame.drawGame)
+
+    const checkStatus = setInterval( function() {
+      if(newGame.gameStatus !== "active") {
+        handleGameResults(newGame.gameStatus)
+        clearInterval(checkStatus)
+      }
+    }, 17)
+
   })
   
-
 });  
 
-
-
-
-
-
-
-
-
-
-
-
-
-// const interiorWalls = {
-//   1: {x:144, y:0, w:48, h:48},
-//   2: {x:112, y:0, w:16, h:16},
-//   3: {x:128, y:0, w:16, h:16},
-//   4: {x:144, y:0, w:16, h:16},
-//   5: {x:160, y:0, w:16, h:16},
-//   6: {x:176, y:0, w:16, h:16},
-// }
-
-// const floorTiles = {
-//   1: {x:0, y:16, w:48, h:48},
-//   2: {x:112, y:16, w:16, h:16},
-//   3: {x:128, y:16, w:16, h:16},
-//   4: {x:144, y:16, w:16, h:16},
-//   5: {x:160, y:16, w:16, h:16},
-//   6: {x:176, y:16, w:16, h:16},
-// }
-
-
-
-  //listeners
-  
 
 
 
