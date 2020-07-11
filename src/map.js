@@ -1,6 +1,7 @@
 class Map {
-  constructor(map) {
+  constructor(map, level) {
     this.map = this.randomizeMap(map)
+    this.level = level
   }
 
   ramdomizer(num, i){

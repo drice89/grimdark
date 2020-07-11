@@ -11,7 +11,7 @@ class Game {
   constructor(viewportDimensions, level) {
     this.gameStatus = "active"
     this.level = level
-    this.gameMap = new Map(levels[`level${level}`])
+    this.gameMap = new Map(levels[`level${level}`], level)
     this.player = new Character()
     this.viewport = new Viewport(viewportDimensions)
     this.bullets = []
@@ -24,8 +24,8 @@ class Game {
     }
     this.monsters = {}
     this.deadMonsters = []
-    this.spawnRate = 6
-    this.maxSpawns = 500
+    this.spawnRate = 7 - level
+    this.maxSpawns = 400 + (100 * level)
     this.currentSpawns = 0
     this.score = 0
     this.key = null
@@ -233,6 +233,7 @@ class Game {
         const tile = TILETYPES[this.gameMap.map[index]];
         const spriteIndex = tile.name === "wall" && this.gameMap.map[index + 64] ? 1 : 0
         try {
+          if (tile.name !== "tile" && tile.name !== "wall" && tile.name !== "computer" && tile.name !== "keycard" && tile.name !== "table") console.log(tile)
           window.ctx.drawImage(window.tileset, tile.sprite[spriteIndex].x, tile.sprite[spriteIndex].y, tile.sprite[spriteIndex].w, tile.sprite[spriteIndex].h, 
             (this.viewport.offset[0] + (x * tileW)), (this.viewport.offset[1] + (y*tileH)), tileW, tileH);
           } catch(err) {

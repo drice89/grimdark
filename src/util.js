@@ -5,12 +5,10 @@ export const FLOORTYPES = {
 export const TILETYPES = {
     0: { name: "wall", sprite:[{x:288, y:96, w:48, h:48},{x: 0, y: 96, w:48, h:48}], floor: FLOORTYPES.solid },
     1: { name: "tile", sprite:[{x:144, y:432, w:48, h:48}], floor: FLOORTYPES.open },
-    2: { name: "keycard", sprite:[{x: 0, y:112, w:16, h:16}], floor: FLOORTYPES.open },
-    3: { name: "item", sprite:[{x: 0, y:0, w:16, h:16}], floor: FLOORTYPES.open },
-    41: { name: "table", sprite:[{x: 48, y:912, w:47, h:47}], floor: FLOORTYPES.solid },
-    42: { name: "vat", sprite:[{x: 144, y:816, w:47, h:47}], floor: FLOORTYPES.solid },
-    43: { name: "crate", sprite:[{x: 0, y:816, w:47, h:47}], floor: FLOORTYPES.open },
+    2: { name: "vat", sprite:[{x: 144, y:816, w:48, h:48}], floor: FLOORTYPES.solid },
+    3: { name: "crate", sprite:[{x: 0, y:816, w:48, h:48}], floor: FLOORTYPES.open },
     5: { name: "computer", sprite:[{x:192, y:816, w:47, h:47}], floor: FLOORTYPES.solid },
+    41: { name: "table", sprite:[{x: 48, y:912, w:47, h:47}], floor: FLOORTYPES.solid },
     100: {name: "closed_door", sprite: [{x:384, y:911, w:48, h:48}], floor: FLOORTYPES.solid},
     101: {name: "open_door", sprite: [{x:432, y:911, w:48, h:48}], floor: FLOORTYPES.open}
   }
