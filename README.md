@@ -1,5 +1,7 @@
 # Grimdark
 
+![Screen Capture](https://media1.giphy.com/media/Q8ChyylVsKBQhWxws4/giphy.gif)
+
 ### The story so far...
 
 The year is 42222 - Your ship exits warp space and you hear the blaring of sirens as you are thown from your feet by the jarring of your spacecraft. Suddenly strange creatures seem to pop into existence around you. You manage to get to your feet and grab your rifle. You let out a burst of fire and smash the controls of the closes bulkhead door. You are locked in a small room in the aft of your ship. You check your vessel's computer system:
