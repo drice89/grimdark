@@ -23,13 +23,35 @@ Open the index.html file in your preferred browser.
 
 This game features collision detections that occur in O(1) (constant) time complexity.
 
+An instance of the "Game" class is created when the game is started. That object carries the "monsters" propety which is an object containing all of the monster objects. The key value of each moster represents their current position as an index on the game map. The game class also contains an array of all bullets that are generated when the player presses the ***spacebar*** 
 
-Credits:
+    class Game {
+        ...
+        this.bullets = []
+        ...
+        this.monsters = {}
+        ...
+
+On each frame, the game iterates through all of the bullets (which is obviously a linear operation but is constrained by fire rate) and checks to see if the bullet is moving into the same tile as a monster by looking up the new index in the monster's object:
+
+      detectCollision(monsters){
+        const monsterCurrentPosition = monsters[this.currentPosition()]
+
+        if (monsterCurrentPosition) {
+          monsterCurrentPosition.alive = false
+          return true
+        }
+        return false
+      }
+    }
+
+If a collision is detected, the monster's "alive" property is set to false and the monster is removed from the monster list after it's move is processed.
+
+### Credits:
 Music - Hootsforce by [Gloryhammer](https://gloryhammer.com/) <- Please support this band they are awesome
-Tileset - [Tiny Galaxy](https://www.oryxdesignlab.com/tinygalaxy) - license from Oryx Design
-Fonts - [Get Swifty](https://fontmeme.com/fonts/get-schwifty-font/)
-Special thanks to [Technologies4me](https://www.youtube.com/channel/UCHpHBzk4fz3oeQ31hmCreGg) for their awesome tutorials.
 
-Colors
-  Purple: 54,0,60
-  Green: 15,153,0
+Tileset - [Tiny Galaxy](https://www.oryxdesignlab.com/tinygalaxy) - license from Oryx Design
+
+Fonts - [Get Swifty](https://fontmeme.com/fonts/get-schwifty-font/)
+
+Special thanks to [Technologies4me](https://www.youtube.com/channel/UCHpHBzk4fz3oeQ31hmCreGg) for their awesome tutorials.
