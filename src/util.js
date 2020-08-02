@@ -13,6 +13,7 @@ export const TILETYPES = {
     101: {name: "open_door", sprite: [{x:432, y:911, w:48, h:48}], floor: FLOORTYPES.open}
   }
 
+
 export const DIRECTIONS = {
     UP: { DIRS: [0, -1], FACING: "UP" },
     DOWN: { DIRS: [0, 1], FACING: "DOWN" },
