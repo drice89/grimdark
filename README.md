@@ -1,6 +1,6 @@
 # Grimdark
 
-![https://i.imgur.com/sApOuJZ.mp4](https://i.imgur.com/sApOuJZ.mp4)
+![Screen Capture](https://media1.giphy.com/media/Q8ChyylVsKBQhWxws4/giphy.gif)
 
 ### The story so far...
 
