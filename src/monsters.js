@@ -78,12 +78,8 @@ class Monster extends Character {
     while (newDirection === direction.FACING) {
       newDirection = directions[randomDirection()]
     }
-
-    return newDirection
-    
+    return newDirection    
   }
-
-  
 }
 
 export default Monster

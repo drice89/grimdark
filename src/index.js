@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const pause = document.getElementById("pause")
     const volume = document.getElementById("volume")
     
-    music.volume = .25
+    music.volume = .01
     music.play();
 
     play.addEventListener("click", () =>{

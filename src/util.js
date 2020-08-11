@@ -44,12 +44,12 @@ export const ASSETURLS = {
 
 export const gameSoundFx = (assetKey) => {
   let audio = new Audio(ASSETURLS[assetKey])
-  if (assetKey === "singleShot") {
-    audio.volume = .5
-  } else {
-    audio.volume = .15
-  }
   audio.play()
+  if (assetKey === "singleShot") {
+    audio.volume = .1
+  } else {
+    audio.volume = .05
+  }
 }
 
 // export const gameMusic = () => {
