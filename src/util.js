@@ -34,5 +34,27 @@ export const ASSETURLS = {
   gameOver: "./assets/gameover.png",
   spaceSet: "./assets/tiny_galaxy_space_3x.png",
   interfaceUrl: "./assets/tiny_galaxy_interface_3x.png",
-  itemsUrl: "./assets/tiny_galaxy_items_3x.png"
+  itemsUrl: "./assets/tiny_galaxy_items_3x.png",
+  singleShot: "./assets/gunShot.mp3",
+  keyCardPickup: "./assets/keyCardPickup.wav",
+  monsterPop: "./assets/monsterPop.wav",
+  openDoors: "./assets/openDoors.wav",
+  death: "./assets/death.wav"
 } 
+
+export const gameSoundFx = (assetKey) => {
+  let audio = new Audio(ASSETURLS[assetKey])
+  if (assetKey === "singleShot") {
+    audio.volume = .5
+  } else {
+    audio.volume = .15
+  }
+  audio.play()
+}
+
+// export const gameMusic = () => {
+//   let audio = new Audio(ASSETURLS.hootsforce)
+//   audio.volume = 0.2
+//   audio.play()
+//   return audio
+// }

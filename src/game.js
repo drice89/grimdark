@@ -2,7 +2,7 @@ import Viewport from "./view";
 import Character from "./character";
 import Map from "./map";
 import * as levels from "./levels"
-import { FLOORTYPES, TILETYPES, DIRECTIONS } from "./util"
+import { FLOORTYPES, TILETYPES, DIRECTIONS, gameSoundFx } from "./util"
 import Monster from "./monsters"
 import Bullet from "./bullets"
 import DeadMonster from "./deadMonsters"
@@ -36,6 +36,7 @@ class Game {
       requestAnimationFrame(this.drawGame)
       return;
     }
+
     
     const currentFrameTime = Date.now()
     const timeElapsed = currentFrameTime - lastFrameTime
@@ -51,9 +52,10 @@ class Game {
 
     //////// generate bullet
     if(this.keysDown[32] && (currentFrameTime - this.player.lastBulletFired) > this.player.rateOfFire) {
-
+      
       let bullet = new Bullet(this.player.facing)
       bullet.placeAt(this.player.tileFrom[0] + (DIRECTIONS[bullet.facing].DIRS[0]), this.player.tileFrom[1] + (DIRECTIONS[bullet.facing].DIRS[1]))
+      gameSoundFx("singleShot")
       this.bullets.push(bullet)
       this.player.lastBulletFired = currentFrameTime
     }
@@ -124,6 +126,7 @@ class Game {
           const randomlyDropKeyAtDeathPosition = monster.dropKey()
           if (randomlyDropKeyAtDeathPosition) {
             this.key = randomlyDropKeyAtDeathPosition
+            gameSoundFx("keyCardPickup")
           }
         }
         
@@ -142,6 +145,7 @@ class Game {
           this.gameStatus = "loss"
           window.ctx.font = "bold 70pt 'Creepster'";
           ctx.fillText("GAME OVER", 215, 370, 473, 171)
+          gameSoundFx("death")
           music.pause()
           return;
         }
@@ -164,6 +168,7 @@ class Game {
     if (this.key) this.renderKey();
     if (this.key && (this.toIndex(this.player.tileFrom[0], this.player.tileFrom[1]) === Math.floor(this.toIndex(this.key[0], this.key[1])))) {
       this.player.keyCard = true;
+      gameSoundFx("openDoors")
       this.key = null
     }
     //////////////////////////

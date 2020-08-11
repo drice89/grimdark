@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
   requestAnimationFrame(pregame.drawPregame)
   const start = document.getElementById("start")
 
-  start.addEventListener( "click", () =>{
+  start.addEventListener("click", () =>{
     document.getElementById("welcome").setAttribute("class", "hidden")
     start.setAttribute("class", "hidden")
     document.getElementById("game").setAttribute("class", "show")

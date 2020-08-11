@@ -1,5 +1,5 @@
 import Character from "./character"
-import { DIRECTIONS, TILETYPES, FLOORTYPES } from "./util"
+import { DIRECTIONS, TILETYPES, FLOORTYPES, gameSoundFx } from "./util"
 
 class Bullet extends Character {
   constructor(direction) {
@@ -32,6 +32,7 @@ class Bullet extends Character {
 
     if (monsterCurrentPosition) {
       monsterCurrentPosition.alive = false
+      gameSoundFx("monsterPop")
       return true
     }
 
