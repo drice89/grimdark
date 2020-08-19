@@ -49,6 +49,19 @@ On each frame, the game iterates through all of the bullets (which is obviously 
 
 If a collision is detected, the monster's "alive" property is set to false and the monster is removed from the monster list after it's move is processed.
 
+### Features:
+ - Immersive gameplay
+ - Audio
+ - Respawning enemies with AI. They're coming to get you!
+ - 5 levels
+ - Great looking sprites
+ 
+ ### Technology:
+ - JavaScript
+ - HTML 5 Canvas
+ - CSS3
+ - Webpack
+
 ### Credits:
 Music - Hootsforce by [Gloryhammer](https://gloryhammer.com/) <- Please support this band they are awesome
 
