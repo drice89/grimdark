@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GRIMDARK</title>
+  <link rel="icon" type="image/png" href="./assets/tmonsters.png">
   <link rel="stylesheet"  type="text/css" href="./css/main.css" />
   <link rel="stylesheet"  type="text/css" href="./css/reset.css" />
   <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
@@ -47,6 +48,13 @@
               <i id="play" class="fas fa-play-circle"></i><i class="fas fa-pause-circle" id="pause"></i>
             </div>
           </div>
+          <div class="divider"></div>
+          <h3>About the creator</h3>
+          <ul class="about">
+            <li><a href="https://drice89.github.io/portfolio/index.html">Website</a></li>
+            <li><a href="https://www.linkedin.com/in/dillon-rice-48339a47/">LinkedIn</a></li>
+            <li><a href="https://github.com/drice89/grimdark">Github</a></li>
+          </ul>
         </div>
       </aside>
       <!-- <div class="welcome"><img src="./assets/game.png" alt="" /></div> -->
@@ -64,15 +72,19 @@
           <ul class="about">
             <li>You have been sent to investigate a space ship thats been overrun by a strange alien species. Can you find the key card
             and advance to the next area?</li>
-            <li>HINT: Some monsters will drop the keycard after they are destroyed. You will hear and aubible confirmation when the card is dropped.</li>
-            <li><img src="https://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif" id="keycard"> Keycard</li>
-            <li>Proceed to the open gate at the end of the map after collecting the card.</li>
-          </ul>
-          <h3>About the creator</h3>
-          <ul class="about">
-            <li><a href="https://drice89.github.io/portfolio/index.html">Website</a></li>
-            <li><a href="https://www.linkedin.com/in/dillon-rice-48339a47/">LinkedIn</a></li>
-            <li><a href="https://github.com/drice89/grimdark">Github</a></li>
+            <li>HINT: Some monsters will drop the keycard after they are destroyed. You will hear an aubible confirmation when the card is dropped.</li>
+            <li><img src="https://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif" id="keycard" /> Keycard</li>
+            <li>The level gate at the end of the map will open after collecting the card.</li>
+            <li class="gate">
+              <span>
+                <span>Closed Gate</span>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif" id="closed-gate" />
+              </span>
+              <span>
+                <span>Open Gate</span>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif" id="open-gate" />
+              </span>
+            </li>
           </ul>
         </div>
         

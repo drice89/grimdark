@@ -247,7 +247,7 @@ ul.controls {
 
 .sound-controls i {
   font-size: 32px;
-  padding: 8px
+  padding: 8px 8px 12px;
 }
 
 .sound-controls i:hover {
@@ -287,3 +287,32 @@ a {
   height: 48px;
   background: url(../assets/tiny_galaxy_items_3x.png) 390px 0;
 }
+
+#open-gate {
+  width: 50px;
+  height: 48px;
+  background: url(../assets/tiny_galaxy_world.png) 338px 144px;
+}
+
+#closed-gate {
+  width: 50px;
+  height: 48px;
+  background: url(../assets/tiny_galaxy_world.png) 385px 144px;
+}
+
+.gate {
+  display: flex;
+  justify-content: space-between;
+}
+
+.gate > span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gate > span > span {
+  padding: 4px 4px 8px 4px;
+}
+
+
