@@ -10,8 +10,8 @@ import DeadMonster from "./deadMonsters"
 class Game {
   constructor(viewportDimensions, level) {
     this.gameStatus = "active"
-    this.level = level
-    this.gameMap = new Map(levels[`level${level}`], level)
+    this.level = 5 //level
+    this.gameMap = new Map(levels[`level${this.level}`], this.level)
     this.player = new Character()
     this.viewport = new Viewport(viewportDimensions)
     this.bullets = []
@@ -262,10 +262,10 @@ class Game {
   }
 
   placeMonster(TILETYPES,FLOORTYPES) {
-    const playerPosition = this.player.position
+    const playerPosition = this.player.tileFrom
     const newMonsterPosition = () => [Math.floor(Math.random() * mapH - 1) + 1, Math.floor(Math.random() * mapW - 1) + 1]
     const validateMonsterPlacement = (position) => {
-      if (Math.abs(position[0] - playerPosition[0]) <= 5 || Math.abs(position[1] - playerPosition[1]) <= 5) return false
+      if (Math.abs(position[0] - playerPosition[0]) <= 1 || Math.abs(position[1] - playerPosition[1]) <= 1) return false
       if(TILETYPES[this.gameMap.map[this.toIndex(...position)]].floor !== FLOORTYPES.open) return false
       return true
     }

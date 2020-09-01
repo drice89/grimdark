@@ -8,7 +8,7 @@ export const TILETYPES = {
     2: { name: "vat", sprite:[{x: 144, y:816, w:48, h:48}], floor: FLOORTYPES.solid },
     3: { name: "crate", sprite:[{x: 0, y:816, w:48, h:48}], floor: FLOORTYPES.open },
     5: { name: "computer", sprite:[{x:192, y:816, w:47, h:47}], floor: FLOORTYPES.solid },
-    41: { name: "table", sprite:[{x: 48, y:912, w:47, h:47}], floor: FLOORTYPES.solid },
+    //41: { name: "table", sprite:[{x: 48, y:912, w:47, h:47}], floor: FLOORTYPES.solid },
     100: {name: "closed_door", sprite: [{x:384, y:911, w:48, h:48}], floor: FLOORTYPES.solid},
     101: {name: "open_door", sprite: [{x:432, y:911, w:48, h:48}], floor: FLOORTYPES.open}
   }

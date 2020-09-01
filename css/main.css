@@ -53,7 +53,7 @@ canvas {
     left: 253px;
     bottom: 230px;
     width: 300px;
-    height: 60px;
+    min-height: 60px;
     border: 1px solid rgb(152, 5, 152);
     border-radius: 15px;
     font-family: 'Creepster', cursive;
