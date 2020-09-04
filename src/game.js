@@ -10,7 +10,7 @@ import DeadMonster from "./deadMonsters"
 class Game {
   constructor(viewportDimensions, level) {
     this.gameStatus = "active"
-    this.level = 5 //level
+    this.level = level
     this.gameMap = new Map(levels[`level${this.level}`], this.level)
     this.player = new Character()
     this.viewport = new Viewport(viewportDimensions)
