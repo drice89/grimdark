@@ -9,6 +9,7 @@ import DeadMonster from "./deadMonsters"
 
 class Game {
   constructor(viewportDimensions, level) {
+    console.log(level)
     this.gameStatus = "active"
     this.level = level
     this.gameMap = new Map(levels[`level${this.level}`], this.level)
@@ -65,10 +66,11 @@ class Game {
     this.renderViewportImage()
     this.renderMap()
     this.moveAndRenderBullets(currentFrameTime)
-    //// generate monster
+
+    // generate monster
     if (!(sec%this.spawnRate) && this.currentSpawns < this.maxSpawns) this.placeMonster(TILETYPES,FLOORTYPES)
   
-    //Player movement//////////////////////////////////////////////////////
+    // Player movement//////////////////////////////////////////////////////
     if (!this.player.processMovement(currentFrameTime)) {
       if((this.keysDown[37] && this.keysDown[39]) || (this.keysDown[38] && this.keysDown[40])) {
         //do nothing
@@ -114,6 +116,10 @@ class Game {
     ////////////////////////////////////////////////////////////////
 
     //monsters
+
+    // generate monster
+    if (!(sec%this.spawnRate) && this.currentSpawns < this.maxSpawns) this.placeMonster(TILETYPES,FLOORTYPES)
+
     
     let monsterMap = {}
     for(let monster in this.monsters) {
