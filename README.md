@@ -8,7 +8,7 @@ The year is 42222 - Your ship exits warp space and you hear the blaring of siren
 
     Error: 404 Not Found
 
-You craft's central server doesn't seem to be responding. You will need to make your way to the central cabin to restart the engine and make a SOS call. You realize that the ship is in lockdown and the only way to get to the bridge is to use the keycards to manually unlock the doors... if only you could remember where you put them.
+Your craft's central server doesn't seem to be responding. You will need to make your way to the central cabin to restart the engine and make a SOS call. You realize that the ship is in lockdown and the only way to get to the bridge is to use the keycards to manually unlock the doors... if only you could remember where you put them.
 
 ### additional information
 
